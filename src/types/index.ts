@@ -8,7 +8,7 @@ export interface Workout { id: string; slug: string; title: string; description:
 export interface Recipe { id: string; slug: string; title: string; description: string; imageUrl: string; calories: number; proteinGrams: number; carbohydrateGrams: number; fatGrams: number; preparationMinutes: number; ingredients: string[] }
 export interface UserPreferences { goal: FitnessGoal; preferredWorkoutDuration: WorkoutDuration }
 export interface User { id: string; firstName: string; preferences: UserPreferences; createdAt: string }
-export interface CompletedWorkout { id: string; workoutId: string; completedAt: string; durationMinutes: number }
+export interface CompletedWorkout { id: string; workoutId: string; completedAt: string; durationMinutes: number; exerciseCount: number; planId?: string; planDay?: number }
 export interface UserProgress { currentStreak: number; completedWorkouts: CompletedWorkout[]; totalMinutes: number; weeklyGoal: number }
 export interface WorkoutPlanDay { day: number; workoutId: string | null; isRestDay: boolean }
 export interface WorkoutPlan { id: string; goal: FitnessGoal; duration: WorkoutDuration; days: WorkoutPlanDay[] }

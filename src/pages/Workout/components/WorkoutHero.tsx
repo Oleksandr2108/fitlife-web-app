@@ -1,10 +1,10 @@
 import { Clock3, Dumbbell, Layers3, ListChecks } from "lucide-react";
-import { ButtonLink } from "../../../components/ui/Button";
+import { Button } from "../../../components/ui/Button";
 import { WorkoutImage } from "../../../components/workouts/WorkoutImage";
 import { formatWorkoutLabel } from "../../../lib/workouts/filterWorkouts";
 import type { Workout } from "../../../types";
 
-export function WorkoutHero({ workout }: { workout: Workout }) {
+export function WorkoutHero({ workout, onStart }: { workout: Workout; onStart: () => void }) {
   const equipment =
     workout.equipment.length > 0
       ? workout.equipment.join(", ")
@@ -75,13 +75,13 @@ export function WorkoutHero({ workout }: { workout: Workout }) {
             </dd>
           </div>
         </dl>
-        <ButtonLink
-          to={`/workout/${workout.id}/session`}
+        <Button
+          onClick={onStart}
           size="large"
           className="mt-7 w-full sm:w-auto sm:self-start"
         >
           Start Workout
-        </ButtonLink>
+        </Button>
       </div>
     </section>
   );

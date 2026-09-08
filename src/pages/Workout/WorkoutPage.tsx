@@ -1,14 +1,36 @@
 import { ChevronLeft } from 'lucide-react'
-import { Link, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import { AppContainer } from '../../components/layout/AppContainer'
 import { Button } from '../../components/ui/Button'
 import { useWorkout } from '../../hooks/queries/useWorkout'
+import { getWorkoutPlanContext } from '../../lib/plan/getWorkoutPlanContext'
+import { useOnboardingStore } from '../../store/onboarding.store'
+import { useWorkoutSessionStore } from '../../store/workoutSession.store'
 import { ExerciseList } from './components/ExerciseList'
 import { WorkoutHero } from './components/WorkoutHero'
 
 export function WorkoutPage() {
   const { id } = useParams<{ id: string }>()
+  const navigate = useNavigate()
+  const [searchParams] = useSearchParams()
   const { data: workout, isPending, isError, refetch } = useWorkout(id)
+  const plan = useOnboardingStore((state) => state.generatedPlan)
+  const sessionWorkoutId = useWorkoutSessionStore((state) => state.workoutId)
+  const sessionStatus = useWorkoutSessionStore((state) => state.status)
+  const startSession = useWorkoutSessionStore((state) => state.startSession)
+
+  function startWorkout() {
+    if (!workout) return
+    const hasDifferentActiveSession = sessionWorkoutId !== workout.id && (sessionStatus === 'active' || sessionStatus === 'paused')
+    if (hasDifferentActiveSession && !window.confirm('Start a new workout? Your current session progress will be replaced.')) return
+
+    const planContext = getWorkoutPlanContext(plan, workout.id, searchParams.get('planDay'))
+    if (sessionWorkoutId !== workout.id || (sessionStatus !== 'active' && sessionStatus !== 'paused')) {
+      startSession(workout, planContext ?? undefined)
+    }
+    const sessionSearch = planContext ? `?planDay=${planContext.planDay}` : ''
+    navigate(`/workout/${workout.id}/session${sessionSearch}`)
+  }
 
   return (
     <main className="py-6 sm:py-10 lg:py-12">
@@ -26,7 +48,7 @@ export function WorkoutPage() {
         ) : !workout ? (
           <div className="mt-4 rounded-surface border border-border bg-surface p-8 text-center sm:p-12"><p className="text-meta text-accent">Workout not found</p><h1 className="text-section-title mt-3">That workout isn’t in the library</h1><p className="mx-auto mt-3 max-w-md text-text-secondary">The link may be outdated, or the workout may no longer be available.</p><Link to="/workouts" className="mt-5 inline-flex min-h-11 items-center font-semibold text-accent hover:text-accent-hover">Browse all workouts</Link></div>
         ) : (
-          <div className="mt-4 space-y-10 sm:space-y-12"><WorkoutHero workout={workout} /><ExerciseList exercises={workout.exercises} /></div>
+          <div className="mt-4 space-y-10 sm:space-y-12"><WorkoutHero workout={workout} onStart={startWorkout} /><ExerciseList exercises={workout.exercises} /></div>
         )}
       </AppContainer>
     </main>
