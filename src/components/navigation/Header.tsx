@@ -1,5 +1,6 @@
 import { NavLink } from 'react-router-dom'
 import { AppContainer } from '../layout/AppContainer'
+import { ThemeToggle } from './ThemeToggle'
 
 const navigationItems = [
   { label: 'Home', to: '/' },
@@ -20,9 +21,12 @@ export function Header() {
           <span aria-hidden="true" className="grid size-8 place-items-center rounded-control bg-accent text-sm font-extrabold text-white">F</span>
           <span className="text-lg">FitLife</span>
         </NavLink>
-        <nav className="hidden items-center gap-1 md:flex" aria-label="Primary navigation">
-          {navigationItems.map((item) => <NavLink key={item.to} to={item.to} className={getNavigationClassName}>{item.label}</NavLink>)}
-        </nav>
+        <div className="flex items-center gap-2">
+          <nav className="hidden items-center gap-1 md:flex" aria-label="Primary navigation">
+            {navigationItems.map((item) => <NavLink key={item.to} to={item.to} className={getNavigationClassName}>{item.label}</NavLink>)}
+          </nav>
+          <ThemeToggle />
+        </div>
       </AppContainer>
     </header>
   )

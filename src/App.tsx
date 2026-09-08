@@ -4,6 +4,7 @@ import { AppLayout } from './components/layout/AppLayout'
 import { HomePage } from './pages/Home/HomePage'
 import { NotFoundPage } from './pages/NotFound/NotFoundPage'
 import { NutritionPage } from './pages/Nutrition/NutritionPage'
+import { OnboardingPage } from './pages/Onboarding/OnboardingPage'
 import { ProgressPage } from './pages/Progress/ProgressPage'
 import { WorkoutPage } from './pages/Workout/WorkoutPage'
 import { WorkoutsPage } from './pages/Workouts/WorkoutsPage'
@@ -18,6 +19,7 @@ export function App() {
             <Route path="/workouts" element={<WorkoutsPage />} />
             <Route path="/workout/:id" element={<WorkoutPage />} />
             <Route path="/nutrition" element={<NutritionPage />} />
+            <Route path="/onboarding" element={<OnboardingPage />} />
             <Route path="/progress" element={<ProgressPage />} />
             <Route path="*" element={<NotFoundPage />} />
           </Route>

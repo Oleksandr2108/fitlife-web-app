@@ -2,6 +2,17 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <script>
+      try {
+        const savedTheme = localStorage.getItem('fitlife-theme')
+        const theme = savedTheme === 'light' ? 'light' : 'dark'
+        document.documentElement.classList.add(theme)
+        document.documentElement.style.colorScheme = theme
+      } catch {
+        document.documentElement.classList.add('dark')
+        document.documentElement.style.colorScheme = 'dark'
+      }
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="FitLife makes everyday fitness and wellness simple." />
     <title>FitLife — Simple Fitness &amp; Wellness</title>
