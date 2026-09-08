@@ -108,6 +108,7 @@ Core stack:
 - Zustand
 - Motion / Framer Motion
 - Lucide React
+- TanStack Query
 
 Development tools:
 
@@ -769,21 +770,65 @@ Do not implement a fake complex backend.
 
 ---
 
-# 25. Server State
+# 25. Server State — TanStack Query
 
-Do not add TanStack Query initially unless it becomes clearly useful.
+Use TanStack Query for asynchronous server-like data.
 
-The initial project can use:
+Even though the project currently uses mock data, entities that conceptually come from a backend should be treated as server state.
 
-- service functions
-- React state
-- custom hooks
+Use TanStack Query for:
 
-If a real backend is later connected and server-state complexity grows, TanStack Query may be introduced.
+- current user
+- workouts
+- individual workout details
+- recipes
+- user progress
+- other future API-backed resources
 
-Do not add libraries merely to make the technology stack look larger.
+Architecture:
 
----
+React Component
+→ Custom Query Hook
+→ TanStack Query
+→ Service Layer
+→ Mock Data (currently) / Real API (later)
+
+Page components should not call service functions through manual
+`useEffect` + `useState` data-fetching patterns.
+
+Prefer custom query hooks such as:
+
+- useCurrentUser()
+- useWorkouts()
+- useWorkout(id)
+- useRecipes()
+- useUserProgress()
+
+Keep query keys centralized and consistent.
+
+TanStack Query manages server-like state.
+
+Zustand manages client/application state.
+
+Do not duplicate the same state between TanStack Query and Zustand.
+
+Examples of TanStack Query state:
+
+- workouts received from a service/API
+- recipes
+- current user received from backend
+- backend progress data
+
+Examples of Zustand state:
+
+- onboarding flow state
+- currently selected fitness goal
+- selected workout duration
+- temporary workout session
+- other client-only application state
+
+When the backend is connected later, service implementations should change
+without requiring page components or query hooks to be rewritten.
 
 # 26. Zustand State
 

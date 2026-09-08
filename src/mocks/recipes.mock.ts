@@ -1,0 +1,8 @@
+import type { Recipe } from '../types'
+
+export const recipesMock: Recipe[] = [
+  { id: 'recipe-001', slug: 'berry-oat-bowl', title: 'Berry Oat Bowl', description: 'Creamy oats with berries, yogurt, and toasted seeds.', imageUrl: '/images/recipes/berry-oat-bowl.webp', calories: 410, proteinGrams: 18, carbohydrateGrams: 58, fatGrams: 12, preparationMinutes: 10, ingredients: ['Rolled oats', 'Greek yogurt', 'Mixed berries', 'Pumpkin seeds'] },
+  { id: 'recipe-002', slug: 'lemon-chicken-grain-bowl', title: 'Lemon Chicken Grain Bowl', description: 'A bright, satisfying bowl with roasted vegetables and herbed grains.', imageUrl: '/images/recipes/lemon-chicken-grain-bowl.webp', calories: 560, proteinGrams: 42, carbohydrateGrams: 61, fatGrams: 16, preparationMinutes: 30, ingredients: ['Chicken breast', 'Brown rice', 'Zucchini', 'Lemon', 'Parsley'] },
+  { id: 'recipe-003', slug: 'crunchy-chickpea-wrap', title: 'Crunchy Chickpea Wrap', description: 'A quick plant-forward lunch with crisp vegetables and tahini.', imageUrl: '/images/recipes/crunchy-chickpea-wrap.webp', calories: 480, proteinGrams: 19, carbohydrateGrams: 65, fatGrams: 17, preparationMinutes: 15, ingredients: ['Chickpeas', 'Whole-grain wrap', 'Red cabbage', 'Cucumber', 'Tahini'] },
+  { id: 'recipe-004', slug: 'cocoa-banana-smoothie', title: 'Cocoa Banana Smoothie', description: 'A smooth cocoa and banana blend for an easy post-workout snack.', imageUrl: '/images/recipes/cocoa-banana-smoothie.webp', calories: 320, proteinGrams: 22, carbohydrateGrams: 46, fatGrams: 7, preparationMinutes: 5, ingredients: ['Banana', 'Milk', 'Greek yogurt', 'Cocoa powder', 'Peanut butter'] },
+]
