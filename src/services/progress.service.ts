@@ -1,4 +1,5 @@
 import { getStoredValue, setStoredValue } from '../lib/storage'
+import { createMockCompletedWorkouts } from '../mocks/completedWorkouts.mock'
 import type { CompletedWorkout } from '../types'
 
 const COMPLETED_WORKOUTS_STORAGE_KEY = 'fitlife-completed-workouts'
@@ -18,6 +19,16 @@ function isCompletedWorkout(value: unknown): value is CompletedWorkout {
 export function getLocalCompletedWorkouts(): CompletedWorkout[] {
   const value = getStoredValue<unknown>(COMPLETED_WORKOUTS_STORAGE_KEY)
   return Array.isArray(value) ? value.filter(isCompletedWorkout) : []
+}
+
+export function getInitialCompletedWorkouts(): CompletedWorkout[] {
+  const storedValue = getStoredValue<unknown>(COMPLETED_WORKOUTS_STORAGE_KEY)
+  if (Array.isArray(storedValue) && storedValue.length > 0) return storedValue.filter(isCompletedWorkout)
+  if (storedValue !== null && !Array.isArray(storedValue)) return []
+
+  const mockCompletedWorkouts = createMockCompletedWorkouts()
+  setStoredValue(COMPLETED_WORKOUTS_STORAGE_KEY, mockCompletedWorkouts)
+  return mockCompletedWorkouts
 }
 
 export function recordCompletedWorkout(record: CompletedWorkout): CompletedWorkout[] {

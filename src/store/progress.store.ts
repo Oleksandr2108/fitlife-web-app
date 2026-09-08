@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import { getLocalCompletedWorkouts, recordCompletedWorkout } from '../services/progress.service'
+import { getInitialCompletedWorkouts, recordCompletedWorkout } from '../services/progress.service'
 import type { CompletedWorkout } from '../types'
 
 interface ProgressState {
@@ -8,6 +8,6 @@ interface ProgressState {
 }
 
 export const useProgressStore = create<ProgressState>((set) => ({
-  completedWorkouts: getLocalCompletedWorkouts(),
+  completedWorkouts: getInitialCompletedWorkouts(),
   addCompletedWorkout: (record) => set({ completedWorkouts: recordCompletedWorkout(record) }),
 }))
