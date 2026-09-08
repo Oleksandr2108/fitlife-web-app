@@ -1,8 +1,60 @@
 import type { Recipe } from '../types'
 
 export const recipesMock: Recipe[] = [
-  { id: 'recipe-001', slug: 'berry-oat-bowl', title: 'Berry Oat Bowl', description: 'Creamy oats with berries, yogurt, and toasted seeds.', imageUrl: 'https://images.unsplash.com/photo-1490645935967-10de6ba17061?auto=format&fit=crop&w=900&q=80', calories: 410, proteinGrams: 18, carbohydrateGrams: 58, fatGrams: 12, preparationMinutes: 10, ingredients: ['Rolled oats', 'Greek yogurt', 'Mixed berries', 'Pumpkin seeds'] },
-  { id: 'recipe-002', slug: 'lemon-chicken-grain-bowl', title: 'Lemon Chicken Grain Bowl', description: 'A bright, satisfying bowl with roasted vegetables and herbed grains.', imageUrl: 'https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=900&q=80', calories: 560, proteinGrams: 42, carbohydrateGrams: 61, fatGrams: 16, preparationMinutes: 30, ingredients: ['Chicken breast', 'Brown rice', 'Zucchini', 'Lemon', 'Parsley'] },
-  { id: 'recipe-003', slug: 'crunchy-chickpea-wrap', title: 'Crunchy Chickpea Wrap', description: 'A quick plant-forward lunch with crisp vegetables and tahini.', imageUrl: 'https://images.unsplash.com/photo-1543353071-873f17a7a088?auto=format&fit=crop&w=900&q=80', calories: 480, proteinGrams: 19, carbohydrateGrams: 65, fatGrams: 17, preparationMinutes: 15, ingredients: ['Chickpeas', 'Whole-grain wrap', 'Red cabbage', 'Cucumber', 'Tahini'] },
-  { id: 'recipe-004', slug: 'cocoa-banana-smoothie', title: 'Cocoa Banana Smoothie', description: 'A smooth cocoa and banana blend for an easy post-workout snack.', imageUrl: '/images/recipes/cocoa-banana-smoothie.webp', calories: 320, proteinGrams: 22, carbohydrateGrams: 46, fatGrams: 7, preparationMinutes: 5, ingredients: ['Banana', 'Milk', 'Greek yogurt', 'Cocoa powder', 'Peanut butter'] },
+  {
+    id: 'recipe-001', slug: 'berry-oat-bowl', title: 'Berry Oat Bowl', mealType: 'breakfast', difficulty: 'easy', servings: 1,
+    description: 'Creamy oats with berries, yogurt, and toasted seeds.', imageUrl: 'https://images.unsplash.com/photo-1490645935967-10de6ba17061?auto=format&fit=crop&w=900&q=80',
+    calories: 410, proteinGrams: 18, carbohydrateGrams: 58, fatGrams: 12, preparationMinutes: 10,
+    ingredients: [{ name: 'Rolled oats', amount: '60', unit: 'g' }, { name: 'Greek yogurt', amount: '120', unit: 'g' }, { name: 'Mixed berries', amount: '100', unit: 'g' }, { name: 'Pumpkin seeds', amount: '1', unit: 'tbsp' }],
+    instructions: ['Cook the oats with water until creamy.', 'Spoon the oats into a bowl and add the yogurt.', 'Top with berries and pumpkin seeds.'],
+  },
+  {
+    id: 'recipe-002', slug: 'lemon-chicken-grain-bowl', title: 'Lemon Chicken Grain Bowl', mealType: 'lunch', difficulty: 'medium', servings: 2,
+    description: 'A bright, satisfying bowl with roasted vegetables and herbed grains.', imageUrl: 'https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=900&q=80',
+    calories: 560, proteinGrams: 42, carbohydrateGrams: 61, fatGrams: 16, preparationMinutes: 30,
+    ingredients: [{ name: 'Chicken breast', amount: '300', unit: 'g' }, { name: 'Brown rice', amount: '160', unit: 'g' }, { name: 'Zucchini', amount: '1' }, { name: 'Lemon', amount: '1' }, { name: 'Parsley', amount: '2', unit: 'tbsp' }],
+    instructions: ['Cook the brown rice until tender.', 'Season the chicken with lemon and sear until cooked through.', 'Roast the zucchini until golden.', 'Divide the grains, chicken, and vegetables between bowls.'],
+  },
+  {
+    id: 'recipe-003', slug: 'crunchy-chickpea-wrap', title: 'Crunchy Chickpea Wrap', mealType: 'lunch', difficulty: 'easy', servings: 1,
+    description: 'A quick plant-forward lunch with crisp vegetables and tahini.', imageUrl: 'https://images.unsplash.com/photo-1543353071-873f17a7a088?auto=format&fit=crop&w=900&q=80',
+    calories: 480, proteinGrams: 19, carbohydrateGrams: 65, fatGrams: 17, preparationMinutes: 15,
+    ingredients: [{ name: 'Chickpeas', amount: '140', unit: 'g' }, { name: 'Whole-grain wrap', amount: '1' }, { name: 'Red cabbage', amount: '50', unit: 'g' }, { name: 'Cucumber', amount: '1/2' }, { name: 'Tahini', amount: '1', unit: 'tbsp' }],
+    instructions: ['Lightly mash the chickpeas with the tahini.', 'Slice the cabbage and cucumber thinly.', 'Layer everything over the wrap, fold, and serve.'],
+  },
+  {
+    id: 'recipe-004', slug: 'cocoa-banana-smoothie', title: 'Cocoa Banana Smoothie', mealType: 'snack', difficulty: 'easy', servings: 1,
+    description: 'A smooth cocoa and banana blend for an easy post-workout snack.', imageUrl: 'https://images.unsplash.com/photo-1553530666-ba11a7da3888?auto=format&fit=crop&w=900&q=80',
+    calories: 320, proteinGrams: 22, carbohydrateGrams: 46, fatGrams: 7, preparationMinutes: 5,
+    ingredients: [{ name: 'Banana', amount: '1' }, { name: 'Milk', amount: '200', unit: 'ml' }, { name: 'Greek yogurt', amount: '100', unit: 'g' }, { name: 'Cocoa powder', amount: '1', unit: 'tbsp' }, { name: 'Peanut butter', amount: '1', unit: 'tsp' }],
+    instructions: ['Add all ingredients to a blender.', 'Blend until smooth and creamy.', 'Pour into a glass and enjoy immediately.'],
+  },
+  {
+    id: 'recipe-005', slug: 'spinach-egg-toast', title: 'Spinach Egg Toast', mealType: 'breakfast', difficulty: 'easy', servings: 1,
+    description: 'Crisp sourdough topped with soft eggs, spinach, and fresh herbs.', imageUrl: 'https://images.unsplash.com/photo-1525351484163-7529414344d8?auto=format&fit=crop&w=900&q=80',
+    calories: 380, proteinGrams: 27, carbohydrateGrams: 34, fatGrams: 15, preparationMinutes: 15,
+    ingredients: [{ name: 'Eggs', amount: '2' }, { name: 'Sourdough bread', amount: '2', unit: 'slices' }, { name: 'Baby spinach', amount: '60', unit: 'g' }, { name: 'Chives', amount: '1', unit: 'tbsp' }],
+    instructions: ['Toast the sourdough until crisp.', 'Wilt the spinach in a warm pan.', 'Cook the eggs to your liking and place them over the toast.', 'Finish with spinach and chopped chives.'],
+  },
+  {
+    id: 'recipe-006', slug: 'herb-salmon-potatoes', title: 'Herb Salmon & Potatoes', mealType: 'dinner', difficulty: 'medium', servings: 2,
+    description: 'Roasted salmon with tender potatoes, green beans, and lemon herbs.', imageUrl: 'https://images.unsplash.com/photo-1467003909585-2f8a72700288?auto=format&fit=crop&w=900&q=80',
+    calories: 620, proteinGrams: 38, carbohydrateGrams: 52, fatGrams: 28, preparationMinutes: 35,
+    ingredients: [{ name: 'Salmon fillets', amount: '2' }, { name: 'Baby potatoes', amount: '400', unit: 'g' }, { name: 'Green beans', amount: '180', unit: 'g' }, { name: 'Lemon', amount: '1' }, { name: 'Dill', amount: '2', unit: 'tbsp' }],
+    instructions: ['Roast the potatoes until nearly tender.', 'Add the salmon and green beans to the tray.', 'Season with lemon and dill, then roast until the salmon flakes easily.'],
+  },
+  {
+    id: 'recipe-007', slug: 'red-lentil-curry', title: 'Red Lentil Curry', mealType: 'dinner', difficulty: 'medium', servings: 3,
+    description: 'A warming tomato and lentil curry with spinach and gentle spices.', imageUrl: 'https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=900&q=80',
+    calories: 440, proteinGrams: 24, carbohydrateGrams: 62, fatGrams: 11, preparationMinutes: 40,
+    ingredients: [{ name: 'Red lentils', amount: '220', unit: 'g' }, { name: 'Chopped tomatoes', amount: '400', unit: 'g' }, { name: 'Baby spinach', amount: '120', unit: 'g' }, { name: 'Coconut milk', amount: '200', unit: 'ml' }, { name: 'Curry powder', amount: '2', unit: 'tsp' }],
+    instructions: ['Toast the curry powder briefly in a saucepan.', 'Add the lentils, tomatoes, coconut milk, and water.', 'Simmer until the lentils are tender.', 'Fold in the spinach and cook until wilted.'],
+  },
+  {
+    id: 'recipe-008', slug: 'yogurt-apple-crunch', title: 'Yogurt Apple Crunch', mealType: 'snack', difficulty: 'easy', servings: 1,
+    description: 'Thick yogurt with crisp apple, cinnamon, and a walnut crunch.', imageUrl: 'https://images.unsplash.com/photo-1511690743698-d9d85f2fbf38?auto=format&fit=crop&w=900&q=80',
+    calories: 290, proteinGrams: 26, carbohydrateGrams: 32, fatGrams: 8, preparationMinutes: 10,
+    ingredients: [{ name: 'Greek yogurt', amount: '220', unit: 'g' }, { name: 'Apple', amount: '1' }, { name: 'Walnuts', amount: '15', unit: 'g' }, { name: 'Cinnamon', amount: '1/2', unit: 'tsp' }],
+    instructions: ['Spoon the yogurt into a bowl.', 'Dice the apple and scatter it over the yogurt.', 'Top with walnuts and cinnamon.'],
+  },
 ]

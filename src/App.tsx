@@ -9,6 +9,7 @@ import { NutritionPage } from './pages/Nutrition/NutritionPage'
 import { OnboardingPage } from './pages/Onboarding/OnboardingPage'
 import { PlanPage } from './pages/Plan/PlanPage'
 import { ProgressPage } from './pages/Progress/ProgressPage'
+import { RecipePage } from './pages/Recipe/RecipePage'
 import { WorkoutPage } from './pages/Workout/WorkoutPage'
 import { WorkoutSessionPage } from './pages/WorkoutSession/WorkoutSessionPage'
 import { WorkoutsPage } from './pages/Workouts/WorkoutsPage'
@@ -23,6 +24,7 @@ export function App() {
             <Route path="/workouts" element={<WorkoutsPage />} />
             <Route path="/workout/:id" element={<WorkoutPage />} />
             <Route path="/nutrition" element={<NutritionPage />} />
+            <Route path="/nutrition/:id" element={<RecipePage />} />
             <Route path="/plan" element={<PlanPage />} />
             <Route path="/progress" element={<ProgressPage />} />
             <Route path="*" element={<NotFoundPage />} />

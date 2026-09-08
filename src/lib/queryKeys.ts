@@ -3,5 +3,6 @@ export const queryKeys = {
   workouts: ['workouts'] as const,
   workout: (id: string | undefined) => ['workouts', 'detail', id] as const,
   recipes: ['recipes'] as const,
+  recipe: (identifier: string | undefined) => ['recipes', 'detail', identifier] as const,
   userProgress: ['user-progress'] as const,
 }

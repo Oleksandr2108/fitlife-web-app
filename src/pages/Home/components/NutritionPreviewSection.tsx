@@ -1,51 +1,13 @@
 import { motion } from "framer-motion";
-import { ArrowRight, Clock3 } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { AppContainer } from "../../../components/layout/AppContainer";
 import { Section } from "../../../components/layout/Section";
+import { RecipeCard } from "../../../components/nutrition/RecipeCard";
+import { RecipeCardSkeleton } from "../../../components/nutrition/RecipeCardSkeleton";
 import { ButtonLink } from "../../../components/ui/Button";
 import { useRecipes } from "../../../hooks/queries/useRecipes";
 import { fadeUp, staggerContainer } from "../../../lib/motion";
-import type { Recipe } from "../../../types";
 import { SectionHeading } from "./SectionHeading";
-
-function RecipeCard({ recipe }: { recipe: Recipe }) {
-  return (
-    <article className="overflow-hidden rounded-surface border border-border bg-surface shadow-surface">
-      <img
-        src={recipe.imageUrl}
-        alt={recipe.title}
-        loading="lazy"
-        className="aspect-[4/3] w-full object-cover"
-      />
-      <div className="p-5">
-        <h3 className="text-card-title">{recipe.title}</h3>
-        <div className="mt-4 flex flex-wrap gap-x-4 gap-y-2 text-xs font-medium text-text-muted">
-          <span>{recipe.calories} kcal</span>
-          <span>{recipe.proteinGrams}g protein</span>
-          <span className="inline-flex items-center gap-1">
-            <Clock3
-              aria-hidden="true"
-              className="size-3.5"
-            />
-            {recipe.preparationMinutes} min
-          </span>
-        </div>
-      </div>
-    </article>
-  );
-}
-
-function RecipeSkeleton() {
-  return (
-    <div className="animate-pulse overflow-hidden rounded-surface border border-border bg-surface">
-      <div className="aspect-[4/3] bg-surface-muted" />
-      <div className="space-y-3 p-5">
-        <div className="h-5 w-2/3 rounded bg-surface-muted" />
-        <div className="h-3 w-full rounded bg-surface-muted" />
-      </div>
-    </div>
-  );
-}
 
 export function NutritionPreviewSection() {
   const { data, isPending, isError, refetch } = useRecipes();
@@ -88,7 +50,7 @@ export function NutritionPreviewSection() {
         >
           {isPending
             ? Array.from({ length: 3 }, (_, index) => (
-                <RecipeSkeleton key={index} />
+                <RecipeCardSkeleton key={index} />
               ))
             : data?.slice(0, 3).map((recipe) => (
                 <motion.div
