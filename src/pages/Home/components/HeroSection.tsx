@@ -3,9 +3,11 @@ import { ArrowRight, Play } from "lucide-react";
 import heroImage from "../../../assets/images/fitlife-hero.webp";
 import { AppContainer } from "../../../components/layout/AppContainer";
 import { ButtonLink } from "../../../components/ui/Button";
+import { usePlanDestination } from "../../../hooks/usePlanDestination";
 import { fadeUp, staggerContainer } from "../../../lib/motion";
 
 export function HeroSection() {
+  const planDestination = usePlanDestination();
   return (
     <section className="overflow-hidden pb-12 pt-8 sm:pb-16 sm:pt-12 lg:pb-24 lg:pt-16">
       <AppContainer className="grid items-center gap-10 lg:grid-cols-[1.02fr_0.98fr] lg:gap-16">
@@ -39,12 +41,12 @@ export function HeroSection() {
             className="mt-7 flex flex-col gap-3 min-[430px]:flex-row"
           >
             <ButtonLink
-              to="/onboarding"
+              to={planDestination.to}
               size="large"
               icon={ArrowRight}
               className="w-full min-[430px]:w-auto"
             >
-              Start Free
+              {planDestination.label}
             </ButtonLink>
             <ButtonLink
               to="/workouts"

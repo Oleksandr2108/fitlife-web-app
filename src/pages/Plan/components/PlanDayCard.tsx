@@ -1,0 +1,11 @@
+import { ChevronRight, MoonStar } from 'lucide-react'
+import { Link } from 'react-router-dom'
+import type { Workout, WorkoutPlanDay } from '../../../types'
+
+interface PlanDayCardProps { dayName: string; planDay: WorkoutPlanDay; workout: Workout | null; isUpNext: boolean }
+
+export function PlanDayCard({ dayName, planDay, workout, isUpNext }: PlanDayCardProps) {
+  if (planDay.isRestDay) return <li className="flex items-center gap-4 rounded-surface border border-border bg-surface p-4 sm:p-5"><span className="grid size-11 shrink-0 place-items-center rounded-control bg-surface-muted text-text-muted"><MoonStar aria-hidden="true" className="size-5" /></span><div><p className="text-meta text-text-muted">{dayName}</p><h2 className="mt-1 font-semibold">Rest & Recovery</h2><p className="mt-1 text-sm text-text-secondary">Take it easy and recharge.</p></div></li>
+  if (!workout) return null
+  return <li><Link to={`/workout/${workout.id}`} className={`flex items-center gap-4 rounded-surface border p-4 transition-colors sm:p-5 ${isUpNext ? 'border-accent bg-accent-soft' : 'border-border bg-surface hover:bg-surface-hover'}`}><span className={`grid size-11 shrink-0 place-items-center rounded-control ${isUpNext ? 'bg-accent text-accent-foreground' : 'bg-surface-muted text-text-muted'}`}><ChevronRight aria-hidden="true" className="size-5" /></span><div className="min-w-0 flex-1"><div className="flex flex-wrap items-center gap-2"><p className="text-meta text-text-muted">{dayName}</p>{isUpNext ? <span className="rounded-full bg-accent px-2 py-0.5 text-[0.6875rem] font-bold text-accent-foreground">Up Next</span> : null}</div><h2 className="mt-1 truncate font-semibold">{workout.title}</h2><p className="mt-1 text-sm capitalize text-text-secondary">{workout.durationMinutes} min · {workout.category.replace('-', ' ')}</p></div><ChevronRight aria-hidden="true" className="size-5 shrink-0 text-text-muted" /></Link></li>
+}

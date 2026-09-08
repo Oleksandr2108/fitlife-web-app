@@ -3,9 +3,11 @@ import { ArrowRight } from "lucide-react";
 import { AppContainer } from "../../../components/layout/AppContainer";
 import { Section } from "../../../components/layout/Section";
 import { ButtonLink } from "../../../components/ui/Button";
+import { usePlanDestination } from "../../../hooks/usePlanDestination";
 import { fadeUp } from "../../../lib/motion";
 
 export function FinalCtaSection() {
+  const planDestination = usePlanDestination();
   return (
     <Section>
       <AppContainer>
@@ -24,12 +26,14 @@ export function FinalCtaSection() {
             Choose your goal, set your pace, and take the first small step.
           </p>
           <ButtonLink
-            to="/onboarding"
+            to={planDestination.to}
             size="large"
             icon={ArrowRight}
             className="mt-7 w-full min-[430px]:w-auto"
           >
-            Start My Plan
+            {planDestination.label === "View My Plan"
+              ? planDestination.label
+              : "Start My Plan"}
           </ButtonLink>
         </motion.div>
       </AppContainer>
