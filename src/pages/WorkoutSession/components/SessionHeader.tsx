@@ -1,14 +1,16 @@
-import { X } from 'lucide-react'
+import { Volume2, VolumeX, X } from 'lucide-react'
 
 interface SessionHeaderProps {
   workoutTitle: string
   currentExercise: number
   exerciseCount: number
   progressPercent: number
+  soundEnabled: boolean
+  onToggleSound: () => void
   onExit: () => void
 }
 
-export function SessionHeader({ workoutTitle, currentExercise, exerciseCount, progressPercent, onExit }: SessionHeaderProps) {
+export function SessionHeader({ workoutTitle, currentExercise, exerciseCount, progressPercent, soundEnabled, onToggleSound, onExit }: SessionHeaderProps) {
   return (
     <header className="border-b border-border bg-background/95 pt-[env(safe-area-inset-top)] backdrop-blur-md">
       <div className="mx-auto flex min-h-16 w-full max-w-3xl items-center gap-3 px-4 sm:px-6">
@@ -19,6 +21,9 @@ export function SessionHeader({ workoutTitle, currentExercise, exerciseCount, pr
           <p className="truncate text-sm font-semibold text-text-primary">{workoutTitle}</p>
           <p className="mt-0.5 text-xs text-text-muted">Exercise {currentExercise} of {exerciseCount}</p>
         </div>
+        <button type="button" onClick={onToggleSound} aria-label={soundEnabled ? 'Mute workout sounds' : 'Enable workout sounds'} aria-pressed={!soundEnabled} className="grid size-11 shrink-0 place-items-center rounded-control text-text-secondary transition-colors hover:bg-surface-hover hover:text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent">
+          {soundEnabled ? <Volume2 aria-hidden="true" className="size-5" /> : <VolumeX aria-hidden="true" className="size-5" />}
+        </button>
         <span className="text-sm font-semibold text-accent">{progressPercent}%</span>
       </div>
       <div className="h-1 bg-surface-muted" role="progressbar" aria-label="Workout progress" aria-valuemin={0} aria-valuemax={100} aria-valuenow={progressPercent}>

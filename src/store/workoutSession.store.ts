@@ -1,4 +1,5 @@
 import { create } from 'zustand'
+import { playPhaseCompleteSound, playTickSound, playWorkoutCompleteSound, playWorkoutStartSound, stopWorkoutAudio } from '../lib/audio/workoutAudio'
 import { getStoredValue, removeStoredValue, setStoredValue } from '../lib/storage'
 import {
   completeCurrentExercise,
@@ -14,6 +15,7 @@ import {
 } from '../lib/workoutSession/sessionState'
 import type { WorkoutSessionData, WorkoutSessionPlanContext } from '../lib/workoutSession/workoutSession.types'
 import type { Workout } from '../types'
+import { useWorkoutPreferencesStore } from './workoutPreferences.store'
 
 interface WorkoutSessionState extends WorkoutSessionData {
   startSession: (workout: Workout, context?: Partial<WorkoutSessionPlanContext>) => void
@@ -43,11 +45,22 @@ function persistSession(session: WorkoutSessionData) {
   setStoredValue(SESSION_STORAGE_KEY, session)
 }
 
+function canPlayWorkoutSounds(): boolean {
+  return useWorkoutPreferencesStore.getState().soundEnabled
+}
+
+function playCompletedTransition(previous: WorkoutSessionData, next: WorkoutSessionData) {
+  if (!canPlayWorkoutSounds() || previous.status === 'completed') return
+  if (next.status === 'completed') playWorkoutCompleteSound()
+  else if (previous.phase !== next.phase || previous.currentExerciseIndex !== next.currentExerciseIndex) playPhaseCompleteSound()
+}
+
 export const useWorkoutSessionStore = create<WorkoutSessionState>((set) => ({
   ...readPersistedSession(),
   startSession: (workout, context) => set(() => {
     const session = createWorkoutSession(workout, context)
     persistSession(session)
+    if (canPlayWorkoutSounds()) playWorkoutStartSound()
     return session
   }),
   pauseSession: () => set((state) => {
@@ -63,21 +76,27 @@ export const useWorkoutSessionStore = create<WorkoutSessionState>((set) => ({
   tick: (workout) => set((state) => {
     const session = tickWorkoutSession(state, workout)
     persistSession(session)
+    const didTransition = state.phase !== session.phase || state.currentExerciseIndex !== session.currentExerciseIndex || session.status === 'completed'
+    if (didTransition) playCompletedTransition(state, session)
+    else if (canPlayWorkoutSounds() && state.status === 'active' && state.remainingSeconds > 0) playTickSound(state.remainingSeconds)
     return session
   }),
   completeExercise: (workout) => set((state) => {
     const session = completeCurrentExercise(state, workout)
     persistSession(session)
+    playCompletedTransition(state, session)
     return session
   }),
   skipExercise: (workout) => set((state) => {
     const session = skipCurrentExercise(state, workout)
     persistSession(session)
+    if (canPlayWorkoutSounds() && state.status !== 'completed' && session.status === 'completed') playWorkoutCompleteSound()
     return session
   }),
   skipRest: (workout) => set((state) => {
     const session = skipRestPeriod(state, workout)
     persistSession(session)
+    if (canPlayWorkoutSounds() && state.phase === 'rest' && session.phase === 'exercise') playWorkoutStartSound()
     return session
   }),
   goToPreviousExercise: (workout) => set((state) => {
@@ -86,6 +105,7 @@ export const useWorkoutSessionStore = create<WorkoutSessionState>((set) => ({
     return session
   }),
   resetSession: () => {
+    stopWorkoutAudio()
     removeStoredValue(SESSION_STORAGE_KEY)
     set(idleWorkoutSession)
   },

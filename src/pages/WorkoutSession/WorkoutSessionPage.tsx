@@ -1,14 +1,17 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { ChevronLeft } from 'lucide-react'
 import { Link, useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import { Button } from '../../components/ui/Button'
 import { useWorkout } from '../../hooks/queries/useWorkout'
+import { useWorkoutAudioLifecycle } from '../../hooks/workoutSession/useWorkoutAudioLifecycle'
 import { useWorkoutTimer } from '../../hooks/workoutSession/useWorkoutTimer'
+import { unlockWorkoutAudio } from '../../lib/audio/workoutAudio'
 import { getWorkoutPlanContext } from '../../lib/plan/getWorkoutPlanContext'
 import { isSessionCompatible } from '../../lib/workoutSession/sessionState'
 import { useOnboardingStore } from '../../store/onboarding.store'
 import { useProgressStore } from '../../store/progress.store'
 import { useWorkoutSessionStore } from '../../store/workoutSession.store'
+import { useWorkoutPreferencesStore } from '../../store/workoutPreferences.store'
 import type { CompletedWorkout } from '../../types'
 import { ExitWorkoutDialog } from './components/ExitWorkoutDialog'
 import { SessionHeader } from './components/SessionHeader'
@@ -27,7 +30,6 @@ export function WorkoutSessionPage() {
   const status = useWorkoutSessionStore((state) => state.status)
   const phase = useWorkoutSessionStore((state) => state.phase)
   const currentExerciseIndex = useWorkoutSessionStore((state) => state.currentExerciseIndex)
-  const remainingSeconds = useWorkoutSessionStore((state) => state.remainingSeconds)
   const completedAt = useWorkoutSessionStore((state) => state.completedAt)
   const sessionPlanId = useWorkoutSessionStore((state) => state.planId)
   const sessionPlanDay = useWorkoutSessionStore((state) => state.planDay)
@@ -39,8 +41,11 @@ export function WorkoutSessionPage() {
   const skipRest = useWorkoutSessionStore((state) => state.skipRest)
   const goToPreviousExercise = useWorkoutSessionStore((state) => state.goToPreviousExercise)
   const resetSession = useWorkoutSessionStore((state) => state.resetSession)
+  const soundEnabled = useWorkoutPreferencesStore((state) => state.soundEnabled)
+  const toggleSound = useWorkoutPreferencesStore((state) => state.toggleSound)
   const [showExitDialog, setShowExitDialog] = useState(false)
 
+  useWorkoutAudioLifecycle()
   useWorkoutTimer(workout ?? null)
 
   const compatibleSession = workout ? isSessionCompatible(useWorkoutSessionStore.getState(), workout) : false
@@ -64,7 +69,34 @@ export function WorkoutSessionPage() {
     const planContext = getWorkoutPlanContext(plan, workout.id, searchParams.get('planDay'))
     const hasDifferentActiveSession = workoutId !== workout.id && (status === 'active' || status === 'paused')
     if (hasDifferentActiveSession && !window.confirm('Start a new workout? Your current session progress will be replaced.')) return
+    if (soundEnabled) void unlockWorkoutAudio()
     startSession(workout, planContext ?? undefined)
+  }
+
+  const resumeWithAudio = useCallback(() => {
+    if (soundEnabled) void unlockWorkoutAudio()
+    resumeSession()
+  }, [resumeSession, soundEnabled])
+
+  const handleCompleteExercise = useCallback(() => {
+    if (workout) completeExercise(workout)
+  }, [completeExercise, workout])
+
+  const handleSkipExercise = useCallback(() => {
+    if (workout) skipExercise(workout)
+  }, [skipExercise, workout])
+
+  const handleSkipRest = useCallback(() => {
+    if (workout) skipRest(workout)
+  }, [skipRest, workout])
+
+  const handlePreviousExercise = useCallback(() => {
+    if (workout) goToPreviousExercise(workout)
+  }, [goToPreviousExercise, workout])
+
+  function toggleWorkoutSound() {
+    if (!soundEnabled) void unlockWorkoutAudio()
+    toggleSound()
   }
 
   function requestExit() {
@@ -94,21 +126,20 @@ export function WorkoutSessionPage() {
 
   return (
     <div className="min-h-dvh">
-      <SessionHeader workoutTitle={workout.title} currentExercise={currentExerciseIndex + 1} exerciseCount={workout.exercises.length} progressPercent={progressPercent} onExit={requestExit} />
+      <SessionHeader workoutTitle={workout.title} currentExercise={currentExerciseIndex + 1} exerciseCount={workout.exercises.length} progressPercent={progressPercent} soundEnabled={soundEnabled} onToggleSound={toggleWorkoutSound} onExit={requestExit} />
       <main className="mx-auto w-full max-w-2xl px-4 pb-[calc(2rem+env(safe-area-inset-bottom))] pt-7 sm:px-6 sm:pt-10">
         <SessionWorkoutView
           exercise={exercise}
           nextExercise={nextExercise}
           phase={phase}
           status={status}
-          remainingSeconds={remainingSeconds}
           canGoPrevious={phase === 'rest' || currentExerciseIndex > 0}
           onPause={pauseSession}
-          onResume={resumeSession}
-          onCompleteExercise={() => completeExercise(workout)}
-          onSkipExercise={() => skipExercise(workout)}
-          onSkipRest={() => skipRest(workout)}
-          onPrevious={() => goToPreviousExercise(workout)}
+          onResume={resumeWithAudio}
+          onCompleteExercise={handleCompleteExercise}
+          onSkipExercise={handleSkipExercise}
+          onSkipRest={handleSkipRest}
+          onPrevious={handlePreviousExercise}
         />
       </main>
       <ExitWorkoutDialog open={showExitDialog} onContinue={() => setShowExitDialog(false)} onEnd={endWorkout} />

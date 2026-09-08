@@ -1,5 +1,6 @@
+import { useWorkoutSessionStore } from '../../../store/workoutSession.store'
+
 interface TimerDialProps {
-  remainingSeconds: number
   totalSeconds: number
   label: string
 }
@@ -10,7 +11,8 @@ function formatTime(seconds: number): string {
   return `${minutes.toString().padStart(2, '0')}:${remainder.toString().padStart(2, '0')}`
 }
 
-export function TimerDial({ remainingSeconds, totalSeconds, label }: TimerDialProps) {
+export function TimerDial({ totalSeconds, label }: TimerDialProps) {
+  const remainingSeconds = useWorkoutSessionStore((state) => state.remainingSeconds)
   const radius = 86
   const circumference = 2 * Math.PI * radius
   const progress = totalSeconds > 0 ? remainingSeconds / totalSeconds : 0

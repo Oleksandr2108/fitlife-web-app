@@ -3,9 +3,11 @@ import { Link, useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import { AppContainer } from '../../components/layout/AppContainer'
 import { Button } from '../../components/ui/Button'
 import { useWorkout } from '../../hooks/queries/useWorkout'
+import { unlockWorkoutAudio } from '../../lib/audio/workoutAudio'
 import { getWorkoutPlanContext } from '../../lib/plan/getWorkoutPlanContext'
 import { useOnboardingStore } from '../../store/onboarding.store'
 import { useWorkoutSessionStore } from '../../store/workoutSession.store'
+import { useWorkoutPreferencesStore } from '../../store/workoutPreferences.store'
 import { ExerciseList } from './components/ExerciseList'
 import { WorkoutHero } from './components/WorkoutHero'
 
@@ -18,6 +20,7 @@ export function WorkoutPage() {
   const sessionWorkoutId = useWorkoutSessionStore((state) => state.workoutId)
   const sessionStatus = useWorkoutSessionStore((state) => state.status)
   const startSession = useWorkoutSessionStore((state) => state.startSession)
+  const soundEnabled = useWorkoutPreferencesStore((state) => state.soundEnabled)
 
   function startWorkout() {
     if (!workout) return
@@ -26,6 +29,7 @@ export function WorkoutPage() {
 
     const planContext = getWorkoutPlanContext(plan, workout.id, searchParams.get('planDay'))
     if (sessionWorkoutId !== workout.id || (sessionStatus !== 'active' && sessionStatus !== 'paused')) {
+      if (soundEnabled) void unlockWorkoutAudio()
       startSession(workout, planContext ?? undefined)
     }
     const sessionSearch = planContext ? `?planDay=${planContext.planDay}` : ''
