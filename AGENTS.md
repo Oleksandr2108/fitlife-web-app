@@ -1287,7 +1287,54 @@ Later it should be possible to connect:
 without rewriting product logic.
 
 ---
+# Theme System
 
+FitLife supports two visual themes:
+
+- dark
+- light
+
+Default theme:
+
+dark
+
+Requirements:
+
+- dark theme must be the default on first visit
+- user can manually switch between dark and light
+- selected theme must persist in localStorage
+- theme should apply at the application root level
+- all shared UI components must support both themes
+- do not implement theme-specific duplicate components
+- do not scatter theme state across pages
+- avoid hardcoded colors that only work in one theme
+
+Use semantic design tokens rather than direct colors where practical.
+
+Examples:
+
+- background
+- surface
+- surface-muted
+- text-primary
+- text-secondary
+- border
+- accent
+- accent-hover
+
+Dark theme should feel premium and fitness-oriented, not pure black everywhere.
+
+Prefer deep neutral/slate backgrounds with slightly lighter surfaces.
+
+Light theme should remain clean and calm.
+
+Theme switching should not cause layout shift.
+
+Persist the selected theme using localStorage.
+
+Default to dark when no preference exists.
+
+Do not automatically override the user's manual preference with the operating system theme.
 # 44. Conversion
 
 The main conversion funnel should be measurable.

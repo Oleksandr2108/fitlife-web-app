@@ -1,1 +1,5 @@
-export function WorkoutPage() { return <h1>Workout details</h1> }
+import { PageShell } from '../../components/layout/PageShell'
+
+export function WorkoutPage() {
+  return <PageShell title="Workout details" />
+}
