@@ -1,65 +1,13 @@
 import { motion } from "framer-motion";
-import { ArrowRight, Clock3 } from "lucide-react";
-import { Link } from "react-router-dom";
+import { ArrowRight } from "lucide-react";
 import { AppContainer } from "../../../components/layout/AppContainer";
 import { Section } from "../../../components/layout/Section";
 import { ButtonLink } from "../../../components/ui/Button";
+import { WorkoutCard } from "../../../components/workouts/WorkoutCard";
+import { WorkoutCardSkeleton } from "../../../components/workouts/WorkoutCardSkeleton";
 import { useWorkouts } from "../../../hooks/queries/useWorkouts";
 import { fadeUp, staggerContainer } from "../../../lib/motion";
-import type { Workout } from "../../../types";
 import { SectionHeading } from "./SectionHeading";
-
-function WorkoutCard({ workout }: { workout: Workout }) {
-  return (
-    <Link
-      to={`/workout/${workout.id}`}
-      className="group block overflow-hidden rounded-surface border border-border bg-surface shadow-surface transition-colors hover:border-border-strong"
-    >
-      <div className="overflow-hidden">
-        <img
-          src={workout.imageUrl}
-          alt={`${workout.title} workout`}
-          loading="lazy"
-          className="aspect-[16/10] w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
-        />
-      </div>
-      <div className="p-5">
-        <div className="flex items-center justify-between gap-3">
-          <span className="text-meta capitalize text-accent">
-            {workout.category.replace("-", " ")}
-          </span>
-          <span className="inline-flex items-center gap-1 text-xs text-text-muted">
-            <Clock3
-              aria-hidden="true"
-              className="size-3.5"
-            />
-            {workout.durationMinutes} min
-          </span>
-        </div>
-        <h3 className="text-card-title mt-3">{workout.title}</h3>
-        <p className="mt-2 text-sm capitalize text-text-secondary">
-          {workout.difficulty} ·{" "}
-          {workout.equipment.length
-            ? workout.equipment.join(", ")
-            : "No equipment"}
-        </p>
-      </div>
-    </Link>
-  );
-}
-
-function WorkoutSkeleton() {
-  return (
-    <div className="animate-pulse overflow-hidden rounded-surface border border-border bg-surface">
-      <div className="aspect-[16/10] bg-surface-muted" />
-      <div className="space-y-3 p-5">
-        <div className="h-3 w-1/3 rounded bg-surface-muted" />
-        <div className="h-5 w-2/3 rounded bg-surface-muted" />
-        <div className="h-4 w-1/2 rounded bg-surface-muted" />
-      </div>
-    </div>
-  );
-}
 
 export function PopularWorkoutsSection() {
   const { data, isPending, isError, refetch } = useWorkouts();
@@ -102,7 +50,7 @@ export function PopularWorkoutsSection() {
         >
           {isPending
             ? Array.from({ length: 3 }, (_, index) => (
-                <WorkoutSkeleton key={index} />
+                <WorkoutCardSkeleton key={index} />
               ))
             : data?.slice(0, 3).map((workout) => (
                 <motion.div

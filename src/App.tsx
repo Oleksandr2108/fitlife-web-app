@@ -9,6 +9,7 @@ import { OnboardingPage } from './pages/Onboarding/OnboardingPage'
 import { PlanPage } from './pages/Plan/PlanPage'
 import { ProgressPage } from './pages/Progress/ProgressPage'
 import { WorkoutPage } from './pages/Workout/WorkoutPage'
+import { WorkoutSessionPage } from './pages/WorkoutSession/WorkoutSessionPage'
 import { WorkoutsPage } from './pages/Workouts/WorkoutsPage'
 
 export function App() {
@@ -20,6 +21,7 @@ export function App() {
             <Route path="/" element={<HomePage />} />
             <Route path="/workouts" element={<WorkoutsPage />} />
             <Route path="/workout/:id" element={<WorkoutPage />} />
+            <Route path="/workout/:id/session" element={<WorkoutSessionPage />} />
             <Route path="/nutrition" element={<NutritionPage />} />
             <Route path="/plan" element={<PlanPage />} />
             <Route path="/progress" element={<ProgressPage />} />
