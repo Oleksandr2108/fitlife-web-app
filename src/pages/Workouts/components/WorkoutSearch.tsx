@@ -7,7 +7,7 @@ interface WorkoutSearchProps {
 
 export function WorkoutSearch({ value, onChange }: WorkoutSearchProps) {
   return (
-    <div className="relative">
+    <div className="relative min-w-0 w-full max-w-full">
       <label htmlFor="workout-search" className="sr-only">
         Search workouts
       </label>

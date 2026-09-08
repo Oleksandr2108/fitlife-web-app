@@ -42,7 +42,7 @@ export function WorkoutsPage() {
           </p>
         </div>
 
-        <div className="mt-8 grid gap-6 rounded-surface border border-border bg-surface p-4 shadow-surface sm:p-6 lg:grid-cols-[minmax(16rem,0.8fr)_minmax(0,1.2fr)] lg:items-start">
+        <div className="mt-8 grid min-w-0 max-w-full gap-6 rounded-surface border border-border bg-surface p-4 shadow-surface sm:p-6 lg:grid-cols-[minmax(16rem,0.8fr)_minmax(0,1.2fr)] lg:items-start">
           <WorkoutSearch value={search} onChange={setSearch} />
           <WorkoutFilters
             category={category}
