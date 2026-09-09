@@ -5,12 +5,14 @@ export function RouteLoadingFallback() {
     <main className="min-h-dvh bg-background text-text-primary" aria-busy="true">
       <AppContainer className="py-8 sm:py-12">
         <div className="flex min-h-11 items-center gap-2 font-bold tracking-tight">
-          <span
+          <img
+            src="/branding/fitlife-mark.svg"
+            alt=""
             aria-hidden="true"
-            className="grid size-8 place-items-center rounded-control bg-accent text-sm font-extrabold text-accent-foreground"
-          >
-            F
-          </span>
+            width="32"
+            height="32"
+            className="size-8 shrink-0"
+          />
           FitLife
         </div>
         <div

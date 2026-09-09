@@ -14,9 +14,19 @@ export function HomeFooter() {
         <div>
           <Link
             to="/"
-            className="text-lg font-bold tracking-tight"
+            className="inline-flex min-h-11 items-center gap-2 rounded-control text-lg font-bold tracking-tight"
+            aria-label="FitLife home"
           >
-            FitLife
+            <img
+              src="/branding/fitlife-mark.svg"
+              alt=""
+              aria-hidden="true"
+              width="32"
+              height="32"
+              loading="lazy"
+              className="size-8 shrink-0"
+            />
+            <span>FitLife</span>
           </Link>
           <p className="mt-1 text-sm text-text-muted">
             Simple fitness for everyday life.

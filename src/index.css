@@ -1,4 +1,6 @@
 @import "tailwindcss";
+@source not "../docs";
+@source not "../README.md";
 
 @theme {
   --color-background: #0b0f14;
