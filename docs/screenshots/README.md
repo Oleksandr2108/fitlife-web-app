@@ -1,8 +1,8 @@
-# Screenshot capture guide
+# Product screenshot gallery
 
-Use real application state and keep all metrics and events unaltered. The primary mobile capture size is **390 × 844**, with the dark theme selected unless a light-theme comparison is explicitly requested.
+This directory contains real captures from the FitLife production preview. All images use a **390 × 844** mobile viewport, actual application state, and unaltered metrics and events. Dark is the primary theme; `home-light.png` demonstrates the persisted light theme.
 
-| File | Route/state to capture |
+| File | Route/state captured |
 | --- | --- |
 | `home.png` | `/` with the complete Home content visible from the top |
 | `onboarding.png` | `/onboarding` on goal selection |
@@ -13,5 +13,6 @@ Use real application state and keep all metrics and events unaltered. The primar
 | `nutrition.png` | `/nutrition` with the recipe library visible |
 | `recipe.png` | `/nutrition/recipe-001` with details and macro visualization |
 | `analytics-debug.png` | `/?utm_source=google&utm_medium=cpc&utm_campaign=fitness_test&utm_content=creative_01&debugAnalytics=true` with the panel open |
+| `home-light.png` | `/` with the persisted light theme selected |
 
-Also capture one representative light-theme screen at the same viewport. Keep browser chrome minimal and do not add native-device frames or functionality that the app does not provide.
+The screenshots were captured without browser chrome or simulated native-device frames. The onboarding selection, generated plan, active workout, seeded progress history, and analytics panel all come from the application’s real flows.

@@ -7,14 +7,20 @@
   <p>Deterministic workout plans, guided sessions, progress analytics, nutrition discovery, and UAC attribution — built as a WebView-ready product.</p>
 
   <p>
-    <strong>Live Demo:</strong> deployment URL to be added by the repository owner<br />
+    <strong>Live Demo:</strong> <a href="https://fitlife-web-app.vercel.app/">https://fitlife-web-app.vercel.app/</a><br />
     <a href="./docs/architecture/README.md">Architecture</a> ·
     <a href="./docs/prompts/README.md">AI-assisted workflow</a> ·
-    <a href="./docs/screenshots/README.md">Screenshot guide</a>
+    <a href="./docs/screenshots/README.md">Screenshot gallery</a>
   </p>
 
   <p>React · TypeScript · Vite · Tailwind CSS · React Router · Zustand · TanStack Query · Framer Motion · Vitest</p>
 </div>
+
+<p align="center">
+  <a href="https://fitlife-web-app.vercel.app/">
+    <img src="./public/branding/fitlife-preview.png" width="960" alt="FitLife product preview showing Home, a guided workout, and Progress" />
+  </a>
+</p>
 
 ## Overview
 
@@ -33,11 +39,23 @@ Home → Onboarding → Personalized 7-Day Plan → Workout Details
 - **Guided session:** timed and repetition exercises, rest, pause/resume, audio feedback, and recovery after navigation.
 - **Progress:** persisted history drives totals, streaks, weekly comparisons, recent activity, and a custom SVG chart.
 
-Real application screenshots are not committed yet. The [capture guide](./docs/screenshots/README.md) defines consistent routes, state, theme, and a 390 × 844 mobile viewport; the [asset guide](./docs/assets/README.md) documents the future repository preview composition. No imagined application screens are used.
+| Home | Onboarding | Personalized plan |
+| --- | --- | --- |
+| ![FitLife Home in dark theme](./docs/screenshots/home.png) | ![FitLife onboarding goal selection](./docs/screenshots/onboarding.png) | ![Generated FitLife 7-day plan](./docs/screenshots/plan.png) |
+
+| Workout library | Guided workout session | Progress dashboard |
+| --- | --- | --- |
+| ![FitLife workout filters and library](./docs/screenshots/workouts.png) | ![FitLife active guided workout timer](./docs/screenshots/workout-session.png) | ![FitLife progress totals and activity chart](./docs/screenshots/progress.png) |
+
+These are real 390 × 844 captures from the production preview. The [screenshot gallery](./docs/screenshots/README.md) records the route and state used for each image; no imagined application screens are included.
 
 ## Nutrition
 
 The secondary lifestyle flow includes a searchable, filterable Nutrition Library and typed Recipe Details with ingredients, preparation steps, nutrition facts, and a custom macro visualization. Content is presented as practical meal inspiration, not medical advice.
+
+| Nutrition library | Recipe details and macros |
+| --- | --- |
+| ![FitLife nutrition search and filters](./docs/screenshots/nutrition.png) | ![FitLife recipe nutrition facts and macro composition](./docs/screenshots/recipe.png) |
 
 ## UAC Attribution & Analytics
 
@@ -69,6 +87,10 @@ Append the following query to a local or deployed Home URL:
 ```
 
 The explicit `debugAnalytics=true` flag lazy-loads a review-only panel with recent events, anonymous/session identifiers, and first/current-touch attribution. It is absent from normal visits and does not expose secrets or environment values.
+
+<p align="center">
+  <img src="./docs/screenshots/analytics-debug.png" width="390" alt="FitLife analytics debug panel showing UTM attribution and a page-view event" />
+</p>
 
 ## Architecture
 
@@ -172,6 +194,10 @@ The [phase prompt archive](./docs/prompts/README.md) preserves the exact core pr
 - Initial UTM capture from the WebView entry URL
 - Dark theme by default, manual light-theme toggle, and both themes QA-tested
 
+| Default dark theme | Persisted light theme |
+| --- | --- |
+| ![FitLife Home in the default dark theme](./docs/screenshots/home.png) | ![FitLife Home in the persisted light theme](./docs/screenshots/home-light.png) |
+
 > FitLife is WebView-ready web architecture; it does not include or claim a native bridge or released mobile application.
 
 ## Project Structure
@@ -192,7 +218,7 @@ docs/
 ├── architecture/ # Concise engineering notes
 ├── assets/       # Brand and preview guidance
 ├── prompts/      # Exact structured phase prompts
-└── screenshots/  # Real screenshot capture specification
+└── screenshots/  # Real product screenshots and capture manifest
 ```
 
 ## Running Locally
