@@ -33,7 +33,7 @@ export function ProgressPreviewSection() {
           className="rounded-[1.25rem] border border-border bg-surface p-5 shadow-surface sm:p-7"
         >
           {isPending ? (
-            <div className="animate-pulse space-y-5">
+            <div className="animate-pulse space-y-5 motion-reduce:animate-none">
               <div className="h-5 w-1/2 rounded bg-surface-muted" />
               <div className="h-20 rounded bg-surface-muted" />
               <div className="h-3 rounded bg-surface-muted" />

@@ -78,7 +78,7 @@ export function WorkoutPage() {
         </Link>
         {isPending ? (
           <div
-            className="mt-4 animate-pulse overflow-hidden rounded-surface border border-border bg-surface lg:grid lg:grid-cols-2"
+            className="mt-4 animate-pulse overflow-hidden rounded-surface border border-border bg-surface motion-reduce:animate-none lg:grid lg:grid-cols-2"
             aria-label="Loading workout details"
           >
             <div className="aspect-[16/10] bg-surface-muted lg:aspect-auto lg:min-h-[30rem]" />

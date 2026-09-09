@@ -20,6 +20,9 @@ function applyTheme(theme: Theme) {
   document.documentElement.classList.toggle("light", theme === "light");
   document.documentElement.classList.toggle("dark", theme === "dark");
   document.documentElement.style.colorScheme = theme;
+  document
+    .querySelector<HTMLMetaElement>('meta[name="theme-color"]')
+    ?.setAttribute("content", theme === "light" ? "#f7f9fa" : "#0b0f14");
 }
 
 interface ThemeState {

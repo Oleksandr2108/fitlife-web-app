@@ -43,7 +43,7 @@ export function PlanPage() {
     return (
       <AppContainer className="py-12">
         <div
-          className="mx-auto h-80 max-w-2xl animate-pulse rounded-surface bg-surface-muted"
+          className="mx-auto h-80 max-w-2xl animate-pulse rounded-surface bg-surface-muted motion-reduce:animate-none"
           aria-label="Loading your plan"
         />
       </AppContainer>

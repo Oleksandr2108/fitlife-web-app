@@ -24,6 +24,8 @@ export function WorkoutImage({ src, alt, className = '', eager = false }: Workou
       src={src}
       alt={alt}
       loading={eager ? 'eager' : 'lazy'}
+      fetchPriority={eager ? 'high' : 'auto'}
+      decoding="async"
       onError={() => setHasError(true)}
       className={className}
     />

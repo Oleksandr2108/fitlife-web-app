@@ -126,6 +126,7 @@ export function HeroSection() {
               }
               className="aspect-[4/5] w-full object-cover transition-transform duration-300 group-hover:scale-[1.02] motion-reduce:transition-none sm:aspect-[5/4] lg:aspect-[4/5]"
               fetchPriority="high"
+              decoding="async"
             />
             <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#0b0f14]/90 via-[#0b0f14]/25 to-transparent p-5 pt-20 text-white">
               <p className="text-meta uppercase text-emerald-300">

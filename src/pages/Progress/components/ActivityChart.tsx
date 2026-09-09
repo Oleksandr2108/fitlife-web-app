@@ -152,7 +152,7 @@ export function ActivityChart({ completedWorkouts, now }: ActivityChartProps) {
                 setActiveIndex(null);
                 setRange(value);
               }}
-              className={`min-h-10 min-w-12 rounded-[0.55rem] px-3 text-sm font-bold transition-colors ${range === value ? "bg-accent text-accent-foreground" : "text-text-secondary hover:text-text-primary"}`}
+              className={`min-h-11 min-w-12 rounded-[0.55rem] px-3 text-sm font-bold transition-colors motion-reduce:transition-none ${range === value ? "bg-accent text-accent-foreground" : "text-text-secondary hover:text-text-primary"}`}
             >
               {value}D
             </button>

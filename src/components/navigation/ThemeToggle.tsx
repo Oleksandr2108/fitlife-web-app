@@ -13,7 +13,7 @@ export function ThemeToggle() {
       type="button"
       onClick={toggleTheme}
       whileTap={{ scale: 0.94 }}
-      className="relative grid size-11 shrink-0 place-items-center rounded-control border border-border bg-surface text-text-secondary transition-colors hover:bg-surface-hover hover:text-text-primary"
+      className="relative grid size-11 shrink-0 place-items-center rounded-control border border-border bg-surface text-text-secondary transition-colors hover:bg-surface-hover hover:text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent motion-reduce:transition-none"
       aria-label={label}
       title={label}
     >

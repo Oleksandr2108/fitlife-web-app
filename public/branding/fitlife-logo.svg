@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 224 64" role="img" aria-labelledby="title description">
+  <title id="title">FitLife</title>
+  <desc id="description">FitLife brand mark and wordmark</desc>
+  <rect width="224" height="64" rx="16" fill="#0b0f14" />
+  <g transform="translate(10 8)">
+    <rect width="48" height="48" rx="13" fill="#22c55e" />
+    <path d="M14 37V12h22l-4 7H22v4h8l-4 7h-4v7H14Z" fill="#07130b" />
+  </g>
+  <text x="72" y="41" fill="#f8fafc" font-family="Inter, Arial, sans-serif" font-size="29" font-weight="750" letter-spacing="-1">FitLife</text>
+</svg>

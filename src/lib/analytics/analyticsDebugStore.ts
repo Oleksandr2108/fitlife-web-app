@@ -1,4 +1,5 @@
 import type { AnalyticsEnvelope } from "../../types/analytics";
+import { isAnalyticsDebugEnabled } from "./analyticsDebug";
 
 const EVENT_LIMIT = 75;
 let events: AnalyticsEnvelope[] = [];
@@ -14,7 +15,7 @@ export function subscribeToDebugEvents(listener: () => void): () => void {
 }
 
 export function appendDebugEvent(event: AnalyticsEnvelope): void {
-  if (!import.meta.env.DEV) return;
+  if (!isAnalyticsDebugEnabled()) return;
   events = [...events.slice(-(EVENT_LIMIT - 1)), event];
   listeners.forEach((listener) => listener());
 }

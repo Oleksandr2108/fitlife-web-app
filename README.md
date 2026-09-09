@@ -1,75 +1,221 @@
-# React + TypeScript + Vite
+<div align="center">
+  <img src="./public/branding/fitlife-logo.svg" width="224" alt="FitLife" />
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+  <h1>FitLife</h1>
 
-Currently, two official plugins are available:
+  <p><strong>Mobile-first fitness &amp; lifestyle web application</strong></p>
+  <p>Deterministic workout plans, guided sessions, progress analytics, nutrition discovery, and UAC attribution — built as a WebView-ready product.</p>
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+  <p>
+    <strong>Live Demo:</strong> deployment URL to be added by the repository owner<br />
+    <a href="./docs/architecture/README.md">Architecture</a> ·
+    <a href="./docs/prompts/README.md">AI-assisted workflow</a> ·
+    <a href="./docs/screenshots/README.md">Screenshot guide</a>
+  </p>
 
-## React Compiler
+  <p>React · TypeScript · Vite · Tailwind CSS · React Router · Zustand · TanStack Query · Framer Motion · Vitest</p>
+</div>
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Overview
 
-## Expanding the ESLint configuration
+FitLife is a consumer-style fitness MVP created as an AI Product Builder test assignment. It demonstrates product thinking and frontend engineering across acquisition, onboarding, workout execution, local persistence, analytics, responsive design, and backend-ready boundaries—without claiming a real backend, medical personalization, or AI-generated plans.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Product Experience
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
+```text
+Home → Onboarding → Personalized 7-Day Plan → Workout Details
+     → Guided Session → Completion → Progress
 ```
 
-You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
+- **Acquisition-ready Home:** quickly communicates the product value and leads into onboarding.
+- **Personalized plan:** deterministic recommendations based on the selected goal and preferred duration.
+- **Workout library:** responsive search and category/difficulty filtering with safe invalid routes.
+- **Guided session:** timed and repetition exercises, rest, pause/resume, audio feedback, and recovery after navigation.
+- **Progress:** persisted history drives totals, streaks, weekly comparisons, recent activity, and a custom SVG chart.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Real application screenshots are not committed yet. The [capture guide](./docs/screenshots/README.md) defines consistent routes, state, theme, and a 390 × 844 mobile viewport; the [asset guide](./docs/assets/README.md) documents the future repository preview composition. No imagined application screens are used.
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Nutrition
 
+The secondary lifestyle flow includes a searchable, filterable Nutrition Library and typed Recipe Details with ingredients, preparation steps, nutrition facts, and a custom macro visualization. Content is presented as practical meal inspiration, not medical advice.
+
+## UAC Attribution & Analytics
+
+UTM attribution is captured before the initial page view and kept outside page components. The first valid attributed visit is preserved as `firstTouch`; later attributed visits update `currentTouch`. A persistent anonymous visitor ID and per-tab session ID are attached centrally alongside route and timestamp context.
+
+```mermaid
+flowchart LR
+  Ad[UAC Campaign] --> UTM[UTM Parameters]
+  UTM --> App[FitLife]
+  App --> Events[Strongly Typed Events]
+  Events --> Provider[Analytics Provider Interface]
 ```
+
+The provider abstraction keeps UI code independent of Google Analytics, Firebase, or another future vendor. The current implementation uses a development console provider and a production no-op provider.
+
+Tracked product funnel:
+
+```text
+page_view → click_start → goal_selected → duration_selected
+→ plan_created → workout_open → workout_started → workout_completed
+```
+
+### Analytics demo
+
+Append the following query to a local or deployed Home URL:
+
+```text
+?utm_source=google&utm_medium=cpc&utm_campaign=fitness_test&utm_content=creative_01&debugAnalytics=true
+```
+
+The explicit `debugAnalytics=true` flag lazy-loads a review-only panel with recent events, anonymous/session identifiers, and first/current-touch attribution. It is absent from normal visits and does not expose secrets or environment values.
+
+## Architecture
+
+```mermaid
+flowchart LR
+  UI[React UI] --> Hooks[Typed Query Hooks]
+  Hooks --> Query[TanStack Query]
+  Query --> Services[Service Layer]
+  Services --> Data[Typed Mocks / Future API]
+
+  UI --> Store[Zustand]
+  Store --> Storage[Validated Persisted Client State]
+```
+
+Server-like catalogs and entities belong to TanStack Query; local onboarding, plan, session, theme, audio, and completion state belong to Zustand. Pages do not import backend-shaped mock catalogs directly. See the concise [architecture notes](./docs/architecture/README.md).
+
+## Technical Highlights
+
+### Workout session
+
+- Separate timed and repetition exercise behavior
+- Deadline-based timer reconciliation rather than trusting interval frequency
+- Pause/resume and explicit rest phases
+- Route-leave pause safety and persisted recovery as paused
+- Lightweight Web Audio feedback with lifecycle cleanup
+- Deduplicated workout completion records
+
+### Progress analytics
+
+- Metrics derived from `CompletedWorkout[]`, without duplicate persisted totals
+- Current streak and Monday-to-Sunday weekly calculations
+- 7-day/30-day aggregation and previous-period comparisons
+- Responsive, keyboard-accessible SVG Activity Chart
+- No charting dependency
+
+## Performance
+
+Phase 10 introduced route-level `React.lazy()`, `Suspense`, a shared route fallback, and a separately lazy-loaded analytics debug panel. Below-the-fold catalog images remain lazy-loaded.
+
+| Production entry JS | Before | After |
+| --- | ---: | ---: |
+| Minified | 534.64 kB | 392.93 kB |
+| Gzip | 160.61 kB | 125.88 kB |
+
+These values come from the recorded Vite production builds. No Lighthouse score is claimed.
+
+## Testing
+
+Current verified result: **16 test files, 65/65 tests passing**.
+
+Meaningful coverage includes plan generation, the workout session state machine, elapsed-time behavior, persistence validation, progress and streak calculations, chart geometry, recipe filtering/macros, attribution parsing/storage, identity, and analytics envelopes.
+
+```bash
+npm run test
+npm run lint
+npm run build
+```
+
+## AI-Assisted Development Process
+
+FitLife followed a structured AI-assisted development workflow rather than an uncontrolled generation pass. Each implementation phase had explicit architecture, scope boundaries, acceptance criteria, and verification requirements. Codex assisted implementation; output was reviewed, tested, and stabilized before later phases.
+
+The [phase prompt archive](./docs/prompts/README.md) preserves the exact core prompts available from the project conversation, including the pre-Phase-9 audit and Phase 8.5 stabilization work.
+
+| Phase | Scope |
+| --- | --- |
+| [1](./docs/prompts/phase-01-foundation.md) | Foundation and typed service architecture |
+| [2](./docs/prompts/phase-02-design-system.md) | Design system and application shell |
+| [3](./docs/prompts/phase-03-home-theme.md) | Theme system and Home experience |
+| [4](./docs/prompts/phase-04-onboarding-plan.md) | Onboarding and deterministic plan |
+| [5](./docs/prompts/phase-05-workouts.md) | Workout library and details |
+| [6](./docs/prompts/phase-06-workout-session.md) | Guided workout session |
+| [7](./docs/prompts/phase-07-progress-dashboard.md) | Derived progress dashboard |
+| [8](./docs/prompts/phase-08-nutrition.md) | Nutrition and recipe details |
+| [8.5](./docs/prompts/phase-08-5-stabilization.md) | Audit and targeted stabilization |
+| [9](./docs/prompts/phase-09-uac-analytics.md) | UAC attribution and analytics |
+| [10](./docs/prompts/phase-10-production-polish.md) | Production polish |
+| [10.5](./docs/prompts/phase-10-5-project-showcase.md) | Branding and project showcase |
+
+## Tech Stack
+
+| Technology | Responsibility |
+| --- | --- |
+| React + TypeScript | Strictly typed component application |
+| Vite | Development and production builds |
+| Tailwind CSS | Semantic tokens and responsive styling |
+| React Router | SPA routing and route-level code splitting |
+| TanStack Query | Asynchronous server-like state |
+| Zustand | Persisted client and workout-session state |
+| Framer Motion | Purposeful, reduced-motion-aware transitions |
+| Lucide React | Consistent application icons |
+| Vitest | High-value domain and persistence tests |
+
+## WebView & Responsive Readiness
+
+- Mobile-first layouts validated at 320, 360, 390, and 430 px
+- Representative tablet/desktop validation at 768, 1024, and 1440 px
+- Touch-friendly controls, mobile safe-area insets, and dynamic viewport units
+- SPA navigation with Vercel fallback and direct-route support
+- Defensive browser-storage access and persisted theme preference
+- Initial UTM capture from the WebView entry URL
+- Dark theme by default, manual light-theme toggle, and both themes QA-tested
+
+> FitLife is WebView-ready web architecture; it does not include or claim a native bridge or released mobile application.
+
+## Project Structure
+
+```text
+src/
+├── api/          # Generic typed API client foundation
+├── components/   # Shared layout, UI, navigation, and domain components
+├── hooks/        # Query, analytics, progress, and session hooks
+├── lib/          # Analytics, attribution, plan, chart, and session logic
+├── mocks/        # Typed mock resources
+├── pages/        # Route-level feature modules
+├── services/     # Backend-ready domain boundaries
+├── store/        # Serializable client/session state
+└── types/        # Shared domain models
+
+docs/
+├── architecture/ # Concise engineering notes
+├── assets/       # Brand and preview guidance
+├── prompts/      # Exact structured phase prompts
+└── screenshots/  # Real screenshot capture specification
+```
+
+## Running Locally
+
+```bash
+npm install
+npm run dev
+```
+
+Production preview:
+
+```bash
+npm run build
+npm run preview
+```
+
+### Environment variables
+
+Copy `.env.example` when configuring an API endpoint. `VITE_API_URL` is the only supported value. Every `VITE_*` variable is bundled into public client code and must never contain credentials or secrets.
+
+## Future Improvements
+
+- Replace typed mocks with a real backend and authenticated cloud sync
+- Connect a production analytics provider behind the existing interface
+- Move media to a production image pipeline/CDN
+- Add a native wrapper and bridge only when a mobile distribution target exists
