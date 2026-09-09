@@ -10,7 +10,8 @@
     <strong>Live Demo:</strong> <a href="https://fitlife-web-app.vercel.app/">Demo Link</a><br />
     <a href="./docs/architecture/README.md">Architecture</a> ·
     <a href="./docs/prompts/README.md">AI-assisted workflow</a> ·
-    <a href="./docs/screenshots/README.md">Screenshot gallery</a>
+    <a href="./docs/screenshots/README.md">Screenshot gallery</a> ·
+    <a href="https://fitlife-web-app.vercel.app/privacy">Privacy</a>
   </p>
 
   <p>React · TypeScript · Vite · Tailwind CSS · React Router · Zustand · TanStack Query · Framer Motion · Vitest</p>
@@ -25,6 +26,30 @@
 ## Overview
 
 FitLife is a consumer-style fitness MVP created as an AI Product Builder test assignment. It demonstrates product thinking and frontend engineering across acquisition, onboarding, workout execution, local persistence, analytics, responsive design, and backend-ready boundaries—without claiming a real backend, medical personalization, or AI-generated plans.
+
+## Promo Video
+
+<p align="center">
+  <a href="./docs/promo/fitlife-promo.mp4">
+    <img src="./docs/promo/fitlife-promo-cover.png" width="960" alt="Play the FitLife product promo video" />
+  </a>
+</p>
+
+The [35-second product tour](./docs/promo/fitlife-promo.mp4) uses real FitLife screens to present onboarding, the workout plan, guided training, progress, nutrition, and analytics.
+
+## Test Assignment Coverage
+
+| Requirement | Status | Implementation |
+| --- | --- | --- |
+| AI-assisted site development | ✅ | Structured phase prompts and reviewed Codex workflow |
+| White/non-gambling product | ✅ | Fitness and nutrition product without betting mechanics |
+| WebView-ready web basis | ✅ | Mobile-first layouts, safe areas, touch UX, SPA routing, and defensive storage |
+| UAC understanding | ✅ | UTM capture, first/current touch, typed events, and documented install-attribution boundary |
+| Functional product | ✅ | Plans, workouts, guided sessions, progress, and nutrition |
+| Google Play/WebView criteria documented | ✅ | [Readiness assessment](./docs/google-play-readiness.md) |
+| Privacy transparency | ✅ | Public [Privacy Policy](https://fitlife-web-app.vercel.app/privacy) |
+| Data Safety mapping | ✅ | [Draft data mapping](./docs/google-play-data-safety.md) |
+| Native Android wrapper | Not part of current scope | Future production step; no Android project is included |
 
 ## Product Experience
 
@@ -87,6 +112,17 @@ Append the following query to a local or deployed Home URL:
 ```
 
 The explicit `debugAnalytics=true` flag lazy-loads a review-only panel with recent events, anonymous/session identifiers, and first/current-touch attribution. It is absent from normal visits and does not expose secrets or environment values.
+
+### UAC scope and limitation
+
+The current implementation demonstrates **web acquisition attribution**:
+
+```text
+Campaign URL with UTM parameters → FitLife web entry
+→ UTM capture → firstTouch/currentTouch → typed product events
+```
+
+An advertisement that sends a user through Google Play before first app open is a different flow. It would require future native install attribution through Google Play Install Referrer or a production attribution provider. Neither is implemented or claimed in this website repository.
 
 <p align="center">
   <img src="./docs/screenshots/analytics-debug.png" width="390" alt="FitLife analytics debug panel showing UTM attribution and a page-view event" />
@@ -184,7 +220,11 @@ The [phase prompt archive](./docs/prompts/README.md) preserves the exact core pr
 | Lucide React | Consistent application icons |
 | Vitest | High-value domain and persistence tests |
 
-## WebView & Responsive Readiness
+## Google Play / WebView Readiness
+
+FitLife is an owned, first-party mobile web product suitable as the web basis for a future Android WebView shell. This repository intentionally contains no Android wrapper, Kotlin code, APK/AAB, native bridge, app signing, or Play Console configuration.
+
+The implemented web characteristics and the future native responsibilities are separated in the [Google Play / WebView Readiness document](./docs/google-play-readiness.md). Current data behavior is recorded in the [Google Play Data Safety draft](./docs/google-play-data-safety.md).
 
 - Mobile-first layouts validated at 320, 360, 390, and 430 px
 - Representative tablet/desktop validation at 768, 1024, and 1440 px
@@ -199,6 +239,8 @@ The [phase prompt archive](./docs/prompts/README.md) preserves the exact core pr
 | ![FitLife Home in the default dark theme](./docs/screenshots/home.png) | ![FitLife Home in the persisted light theme](./docs/screenshots/home-light.png) |
 
 > FitLife is WebView-ready web architecture; it does not include or claim a native bridge or released mobile application.
+
+The public web policy is available at [fitlife-web-app.vercel.app/privacy](https://fitlife-web-app.vercel.app/privacy).
 
 ## Project Structure
 
@@ -218,7 +260,9 @@ docs/
 ├── architecture/ # Concise engineering notes
 ├── assets/       # Brand and preview guidance
 ├── prompts/      # Exact structured phase prompts
-└── screenshots/  # Real product screenshots and capture manifest
+├── screenshots/  # Real product screenshots and capture manifest
+├── google-play-readiness.md
+└── google-play-data-safety.md
 ```
 
 ## Running Locally

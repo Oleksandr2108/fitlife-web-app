@@ -1,13 +1,14 @@
 import { Link } from "react-router-dom";
-import { AppContainer } from "../../../components/layout/AppContainer";
+import { AppContainer } from "../layout/AppContainer";
 
 const links = [
   { label: "Workouts", to: "/workouts" },
   { label: "Nutrition", to: "/nutrition" },
   { label: "Progress", to: "/progress" },
+  { label: "Privacy", to: "/privacy" },
 ];
 
-export function HomeFooter() {
+export function Footer() {
   return (
     <footer className="border-t border-border bg-background-secondary">
       <AppContainer className="flex flex-col gap-6 py-8 sm:flex-row sm:items-center sm:justify-between">
@@ -40,7 +41,7 @@ export function HomeFooter() {
             <Link
               key={link.to}
               to={link.to}
-              className="min-h-11 py-2 text-sm font-semibold text-text-secondary transition-colors hover:text-accent"
+              className="min-h-11 rounded-control py-2 text-sm font-semibold text-text-secondary transition-colors hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
             >
               {link.label}
             </Link>
