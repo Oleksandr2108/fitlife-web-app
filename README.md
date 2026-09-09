@@ -7,7 +7,7 @@
   <p>Deterministic workout plans, guided sessions, progress analytics, nutrition discovery, and UAC attribution — built as a WebView-ready product.</p>
 
   <p>
-    <strong>Live Demo:</strong> <a href="https://fitlife-web-app.vercel.app/">https://fitlife-web-app.vercel.app/</a><br />
+    <strong>Live Demo:</strong> <a href="https://fitlife-web-app.vercel.app/">Demo Link</a><br />
     <a href="./docs/architecture/README.md">Architecture</a> ·
     <a href="./docs/prompts/README.md">AI-assisted workflow</a> ·
     <a href="./docs/screenshots/README.md">Screenshot gallery</a>
