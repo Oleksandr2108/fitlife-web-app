@@ -23,7 +23,7 @@ export function WorkoutCard({ workout, source = 'unknown' }: WorkoutCardProps) {
         <WorkoutImage
           src={workout.imageUrl}
           alt={`${workout.title} workout`}
-          className="aspect-[16/10] w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
+          className="aspect-[16/10] w-full object-cover transition-transform duration-300 group-hover:scale-[1.02] motion-reduce:transition-none"
         />
       </div>
       <div className="flex flex-1 flex-col p-5">

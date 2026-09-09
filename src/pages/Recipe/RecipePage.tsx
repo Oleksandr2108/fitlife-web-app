@@ -100,6 +100,8 @@ export function RecipePage() {
             <img
               src={recipe.imageUrl}
               alt={`${recipe.title} recipe`}
+              fetchPriority="high"
+              decoding="async"
               className="aspect-[16/11] h-full max-h-[30rem] w-full object-cover"
             />
             <div className="min-w-0 p-5 sm:p-8 lg:self-center">

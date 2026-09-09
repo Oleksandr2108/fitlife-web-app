@@ -1,76 +1,79 @@
 import { MotionConfig } from "framer-motion";
+import { lazy, Suspense } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { AnalyticsLifecycle } from "./components/analytics/AnalyticsLifecycle";
-import { AnalyticsDebugPanel } from "./components/dev/AnalyticsDebugPanel";
-import { isAnalyticsDebugEnabled } from "./lib/analytics/analyticsDebug";
 import { AppLayout } from "./components/layout/AppLayout";
 import { FocusedLayout } from "./components/layout/FocusedLayout";
+import { RouteLoadingFallback } from "./components/layout/RouteLoadingFallback";
 import { WorkoutSessionLayout } from "./components/layout/WorkoutSessionLayout";
-import { HomePage } from "./pages/Home/HomePage";
-import { NotFoundPage } from "./pages/NotFound/NotFoundPage";
-import { NutritionPage } from "./pages/Nutrition/NutritionPage";
-import { OnboardingPage } from "./pages/Onboarding/OnboardingPage";
-import { PlanPage } from "./pages/Plan/PlanPage";
-import { ProgressPage } from "./pages/Progress/ProgressPage";
-import { RecipePage } from "./pages/Recipe/RecipePage";
-import { WorkoutPage } from "./pages/Workout/WorkoutPage";
-import { WorkoutSessionPage } from "./pages/WorkoutSession/WorkoutSessionPage";
-import { WorkoutsPage } from "./pages/Workouts/WorkoutsPage";
+import { isAnalyticsDebugEnabled } from "./lib/analytics/analyticsDebug";
+
+const HomePage = lazy(() =>
+  import("./pages/Home/HomePage").then((module) => ({ default: module.HomePage })),
+);
+const OnboardingPage = lazy(() =>
+  import("./pages/Onboarding/OnboardingPage").then((module) => ({ default: module.OnboardingPage })),
+);
+const PlanPage = lazy(() =>
+  import("./pages/Plan/PlanPage").then((module) => ({ default: module.PlanPage })),
+);
+const WorkoutsPage = lazy(() =>
+  import("./pages/Workouts/WorkoutsPage").then((module) => ({ default: module.WorkoutsPage })),
+);
+const WorkoutPage = lazy(() =>
+  import("./pages/Workout/WorkoutPage").then((module) => ({ default: module.WorkoutPage })),
+);
+const WorkoutSessionPage = lazy(() =>
+  import("./pages/WorkoutSession/WorkoutSessionPage").then((module) => ({ default: module.WorkoutSessionPage })),
+);
+const ProgressPage = lazy(() =>
+  import("./pages/Progress/ProgressPage").then((module) => ({ default: module.ProgressPage })),
+);
+const NutritionPage = lazy(() =>
+  import("./pages/Nutrition/NutritionPage").then((module) => ({ default: module.NutritionPage })),
+);
+const RecipePage = lazy(() =>
+  import("./pages/Recipe/RecipePage").then((module) => ({ default: module.RecipePage })),
+);
+const NotFoundPage = lazy(() =>
+  import("./pages/NotFound/NotFoundPage").then((module) => ({ default: module.NotFoundPage })),
+);
+const AnalyticsDebugPanel = lazy(() =>
+  import("./components/dev/AnalyticsDebugPanel").then((module) => ({
+    default: module.AnalyticsDebugPanel,
+  })),
+);
 
 export function App() {
   return (
     <MotionConfig reducedMotion="user">
       <BrowserRouter>
         <AnalyticsLifecycle />
-        <Routes>
-          <Route element={<AppLayout />}>
-            <Route
-              path="/"
-              element={<HomePage />}
-            />
-            <Route
-              path="/workouts"
-              element={<WorkoutsPage />}
-            />
-            <Route
-              path="/workout/:id"
-              element={<WorkoutPage />}
-            />
-            <Route
-              path="/nutrition"
-              element={<NutritionPage />}
-            />
-            <Route
-              path="/nutrition/:id"
-              element={<RecipePage />}
-            />
-            <Route
-              path="/plan"
-              element={<PlanPage />}
-            />
-            <Route
-              path="/progress"
-              element={<ProgressPage />}
-            />
-            <Route
-              path="*"
-              element={<NotFoundPage />}
-            />
-          </Route>
-          <Route element={<FocusedLayout />}>
-            <Route
-              path="/onboarding"
-              element={<OnboardingPage />}
-            />
-          </Route>
-          <Route element={<WorkoutSessionLayout />}>
-            <Route
-              path="/workout/:id/session"
-              element={<WorkoutSessionPage />}
-            />
-          </Route>
-        </Routes>
-        {isAnalyticsDebugEnabled() ? <AnalyticsDebugPanel /> : null}
+        <Suspense fallback={<RouteLoadingFallback />}>
+          <Routes>
+            <Route element={<AppLayout />}>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/workouts" element={<WorkoutsPage />} />
+              <Route path="/workout/:id" element={<WorkoutPage />} />
+              <Route path="/nutrition" element={<NutritionPage />} />
+              <Route path="/nutrition/:id" element={<RecipePage />} />
+              <Route path="/plan" element={<PlanPage />} />
+              <Route path="/progress" element={<ProgressPage />} />
+              <Route path="*" element={<NotFoundPage />} />
+            </Route>
+            <Route element={<FocusedLayout />}>
+              <Route path="/onboarding" element={<OnboardingPage />} />
+            </Route>
+            <Route element={<WorkoutSessionLayout />}>
+              <Route path="/workout/:id/session" element={<WorkoutSessionPage />} />
+            </Route>
+          </Routes>
+        </Suspense>
+        {isAnalyticsDebugEnabled() ? (
+          <Suspense fallback={null}>
+            <AnalyticsDebugPanel />
+          </Suspense>
+        ) : null}
       </BrowserRouter>
     </MotionConfig>
   );

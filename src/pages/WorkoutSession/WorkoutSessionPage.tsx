@@ -205,7 +205,7 @@ export function WorkoutSessionPage() {
     return (
       <main className="grid min-h-dvh place-items-center px-4">
         <div
-          className="w-full max-w-lg animate-pulse space-y-5"
+          className="w-full max-w-lg animate-pulse space-y-5 motion-reduce:animate-none"
           aria-label="Loading workout session"
         >
           <div className="mx-auto size-52 rounded-full bg-surface-muted" />

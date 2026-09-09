@@ -24,7 +24,7 @@ const sizeClasses: Record<ButtonSize, string> = {
 }
 
 function getButtonClassName(variant: ButtonVariant, size: ButtonSize, className: string) {
-  return `inline-flex items-center justify-center gap-2 rounded-control border font-semibold transition-colors duration-200 disabled:cursor-not-allowed disabled:opacity-50 ${variantClasses[variant]} ${sizeClasses[size]} ${className}`
+  return `inline-flex items-center justify-center gap-2 rounded-control border font-semibold transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background motion-reduce:transition-none disabled:cursor-not-allowed disabled:opacity-50 ${variantClasses[variant]} ${sizeClasses[size]} ${className}`
 }
 
 export function Button({ variant = 'primary', size = 'default', icon: Icon, className = '', children, type = 'button', ...props }: ButtonProps) {

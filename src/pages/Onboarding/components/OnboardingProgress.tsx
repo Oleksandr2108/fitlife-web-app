@@ -19,7 +19,7 @@ export function OnboardingProgress({ step }: OnboardingProgressProps) {
         aria-valuenow={step}
       >
         <div
-          className="h-full rounded-full bg-accent transition-[width] duration-300"
+          className="h-full rounded-full bg-accent transition-[width] duration-300 motion-reduce:transition-none"
           style={{ width: `${progress}%` }}
         />
       </div>
