@@ -5,9 +5,11 @@ import { Section } from "../../../components/layout/Section";
 import { ButtonLink } from "../../../components/ui/Button";
 import { usePlanDestination } from "../../../hooks/usePlanDestination";
 import { fadeUp } from "../../../lib/motion";
+import { trackEvent } from "../../../lib/analytics/analytics";
 
 export function FinalCtaSection() {
   const planDestination = usePlanDestination();
+  const isAcquisitionCta = planDestination.label !== "View My Plan";
   return (
     <Section>
       <AppContainer>
@@ -27,6 +29,10 @@ export function FinalCtaSection() {
           </p>
           <ButtonLink
             to={planDestination.to}
+            onClick={() => {
+              if (isAcquisitionCta)
+                trackEvent("click_start", { location: "final_cta" });
+            }}
             size="large"
             icon={ArrowRight}
             className="mt-7 w-full min-[430px]:w-auto"

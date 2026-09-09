@@ -11,6 +11,7 @@ import { useWorkout } from "../../hooks/queries/useWorkout";
 import { useWorkoutAudioLifecycle } from "../../hooks/workoutSession/useWorkoutAudioLifecycle";
 import { useWorkoutTimer } from "../../hooks/workoutSession/useWorkoutTimer";
 import { unlockWorkoutAudio } from "../../lib/audio/workoutAudio";
+import { trackEvent } from "../../lib/analytics/analytics";
 import { getWorkoutPlanContext } from "../../lib/plan/getWorkoutPlanContext";
 import { isSessionCompatible } from "../../lib/workoutSession/sessionState";
 import { useOnboardingStore } from "../../store/onboarding.store";
@@ -105,7 +106,16 @@ export function WorkoutSessionPage() {
       ...(sessionPlanId ? { planId: sessionPlanId } : {}),
       ...(sessionPlanDay ? { planDay: sessionPlanDay } : {}),
     };
+    const alreadyRecorded = useProgressStore
+      .getState()
+      .completedWorkouts.some((item) => item.id === record.id);
     addCompletedWorkout(record);
+    if (!alreadyRecorded)
+      trackEvent("workout_completed", {
+        workoutId: workout.id,
+        actualDurationMinutes: record.durationMinutes,
+        ...(sessionPlanId ? { planId: sessionPlanId } : {}),
+      });
   }, [
     addCompletedWorkout,
     completedAt,
@@ -134,6 +144,10 @@ export function WorkoutSessionPage() {
       return;
     if (soundEnabled) void unlockWorkoutAudio();
     startSession(workout, planContext ?? undefined);
+    trackEvent("workout_started", {
+      workoutId: workout.id,
+      ...(planContext?.planId ? { planId: planContext.planId } : {}),
+    });
   }
 
   const resumeWithAudio = useCallback(() => {

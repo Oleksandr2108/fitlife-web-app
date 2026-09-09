@@ -96,4 +96,5 @@ export interface AttributionData {
   content?: string;
   term?: string;
   capturedAt: string;
+  landingPath: string;
 }

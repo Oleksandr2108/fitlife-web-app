@@ -2,9 +2,11 @@ import { Clock3 } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { recipeFilterThresholds } from '../../lib/nutrition/filterRecipes'
 import type { Recipe } from '../../types'
+import type { RecipeOpenSource } from '../../types/analytics'
 
 interface RecipeCardProps {
   recipe: Recipe
+  source?: RecipeOpenSource
 }
 
 function characteristicLabel(recipe: Recipe): string | null {
@@ -14,10 +16,10 @@ function characteristicLabel(recipe: Recipe): string | null {
   return null
 }
 
-export function RecipeCard({ recipe }: RecipeCardProps) {
+export function RecipeCard({ recipe, source = 'unknown' }: RecipeCardProps) {
   const badge = characteristicLabel(recipe)
   return (
-    <Link to={`/nutrition/${recipe.id}`} className="group flex h-full min-w-0 flex-col overflow-hidden rounded-surface border border-border bg-surface shadow-surface transition-colors hover:border-border-strong focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background">
+    <Link to={`/nutrition/${recipe.id}`} state={{ analyticsSource: source }} className="group flex h-full min-w-0 flex-col overflow-hidden rounded-surface border border-border bg-surface shadow-surface transition-colors hover:border-border-strong focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background">
       <div className="relative overflow-hidden">
         <img src={recipe.imageUrl} alt={`${recipe.title} recipe`} loading="lazy" className="aspect-[16/10] w-full object-cover transition-transform duration-300 group-hover:scale-[1.02] motion-reduce:transition-none" />
         {badge ? <span className="absolute left-3 top-3 rounded-full border border-white/20 bg-black/65 px-2.5 py-1 text-xs font-semibold text-white">{badge}</span> : null}

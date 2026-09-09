@@ -40,6 +40,7 @@ export function PlanDayCard({
     <li>
       <Link
         to={`/workout/${workout.id}?planDay=${planDay.day}`}
+        state={{ analyticsSource: "plan" }}
         className={`flex items-center gap-4 rounded-surface border p-4 transition-colors sm:p-5 ${isUpNext ? "border-accent bg-accent-soft" : "border-border bg-surface hover:bg-surface-hover"}`}
       >
         <span

@@ -70,6 +70,7 @@ export function RecentActivity({
               {workout ? (
                 <Link
                   to={`/workout/${workout.id}`}
+                  state={{ analyticsSource: "progress" }}
                   className={`${classes} hover:bg-surface-hover`}
                 >
                   <ActivityContent

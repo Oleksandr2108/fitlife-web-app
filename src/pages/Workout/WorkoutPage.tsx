@@ -9,6 +9,7 @@ import { AppContainer } from "../../components/layout/AppContainer";
 import { Button } from "../../components/ui/Button";
 import { useWorkout } from "../../hooks/queries/useWorkout";
 import { unlockWorkoutAudio } from "../../lib/audio/workoutAudio";
+import { trackEvent } from "../../lib/analytics/analytics";
 import { getWorkoutPlanContext } from "../../lib/plan/getWorkoutPlanContext";
 import { useOnboardingStore } from "../../store/onboarding.store";
 import { useWorkoutSessionStore } from "../../store/workoutSession.store";
@@ -53,6 +54,10 @@ export function WorkoutPage() {
     ) {
       if (soundEnabled) void unlockWorkoutAudio();
       startSession(workout, planContext ?? undefined);
+      trackEvent("workout_started", {
+        workoutId: workout.id,
+        ...(planContext?.planId ? { planId: planContext.planId } : {}),
+      });
     }
     const sessionSearch = planContext ? `?planDay=${planContext.planDay}` : "";
     navigate(`/workout/${workout.id}/session${sessionSearch}`);

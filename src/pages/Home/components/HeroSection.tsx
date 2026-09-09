@@ -7,6 +7,7 @@ import { ButtonLink } from "../../../components/ui/Button";
 import { useWorkouts } from "../../../hooks/queries/useWorkouts";
 import { usePlanDestination } from "../../../hooks/usePlanDestination";
 import { fadeUp, staggerContainer } from "../../../lib/motion";
+import { trackEvent } from "../../../lib/analytics/analytics";
 import { getNextPlanWorkoutDay } from "../../../lib/plan/getNextPlanWorkoutDay";
 import { useOnboardingStore } from "../../../store/onboarding.store";
 import { useProgressStore } from "../../../store/progress.store";
@@ -38,6 +39,7 @@ export function HeroSection() {
         : "Open today’s session"
       : "Personalized workouts for your week";
   const sessionLabel = nextPlanDay ? "Today’s plan" : "Your next step";
+  const isAcquisitionCta = planDestination.label === "Start Free";
   return (
     <section className="overflow-hidden pb-12 pt-8 sm:pb-16 sm:pt-12 lg:pb-24 lg:pt-16">
       <AppContainer className="grid items-center gap-10 lg:grid-cols-[1.02fr_0.98fr] lg:gap-16">
@@ -72,6 +74,10 @@ export function HeroSection() {
           >
             <ButtonLink
               to={planDestination.to}
+              onClick={() => {
+                if (isAcquisitionCta)
+                  trackEvent("click_start", { location: "hero" });
+              }}
               size="large"
               icon={ArrowRight}
               className="w-full min-[430px]:w-auto"
@@ -103,6 +109,7 @@ export function HeroSection() {
         >
           <Link
             to={sessionDestination}
+            state={nextPlanDay ? { analyticsSource: "home" } : undefined}
             aria-label={
               todayWorkout
                 ? `Open today's workout: ${todayWorkout.title}`

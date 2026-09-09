@@ -3,6 +3,7 @@ import { useState } from "react";
 import { AppContainer } from "../../components/layout/AppContainer";
 import { useWorkouts } from "../../hooks/queries/useWorkouts";
 import { delay } from "../../lib/delay";
+import { trackEvent } from "../../lib/analytics/analytics";
 import { onboardingStep } from "../../lib/motion";
 import { generateWorkoutPlan } from "../../lib/plan/generateWorkoutPlan";
 import { useOnboardingStore } from "../../store/onboarding.store";
@@ -35,19 +36,33 @@ export function OnboardingPage() {
     setCurrentStep(step);
   }
 
+  function selectGoal(goal: Parameters<typeof setGoal>[0]) {
+    setGoal(goal);
+    trackEvent("goal_selected", { goal });
+  }
+
+  function selectDuration(duration: Parameters<typeof setDuration>[0]) {
+    setDuration(duration);
+    trackEvent("duration_selected", { duration });
+  }
+
   async function createPlan() {
     if (!selectedGoal || !selectedDuration || !workouts) return;
     setDirection(1);
     setCurrentStep(3);
     setIsGenerating(true);
     await delay(700);
-    activatePlan(
-      generateWorkoutPlan({
-        goal: selectedGoal,
-        duration: selectedDuration,
-        workouts,
-      }),
-    );
+    const newPlan = generateWorkoutPlan({
+      goal: selectedGoal,
+      duration: selectedDuration,
+      workouts,
+    });
+    activatePlan(newPlan);
+    trackEvent("plan_created", {
+      planId: newPlan.id,
+      goal: newPlan.goal,
+      duration: newPlan.duration,
+    });
     setIsGenerating(false);
   }
 
@@ -78,7 +93,7 @@ export function OnboardingPage() {
               {currentStep === 1 ? (
                 <GoalStep
                   selectedGoal={selectedGoal}
-                  onSelect={setGoal}
+                  onSelect={selectGoal}
                   onContinue={() => goToStep(2, 1)}
                 />
               ) : null}
@@ -87,7 +102,7 @@ export function OnboardingPage() {
                   selectedDuration={selectedDuration}
                   isLoading={isPending}
                   isError={isError}
-                  onSelect={setDuration}
+                  onSelect={selectDuration}
                   onBack={() => goToStep(1, -1)}
                   onContinue={() => void createPlan()}
                   onRetry={() => void refetch()}

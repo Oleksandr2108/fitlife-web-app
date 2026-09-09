@@ -2,18 +2,21 @@ import { Clock3, Dumbbell } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { formatWorkoutLabel } from '../../lib/workouts/filterWorkouts'
 import type { Workout } from '../../types'
+import type { WorkoutOpenSource } from '../../types/analytics'
 import { WorkoutImage } from './WorkoutImage'
 
 interface WorkoutCardProps {
   workout: Workout
+  source?: WorkoutOpenSource
 }
 
-export function WorkoutCard({ workout }: WorkoutCardProps) {
+export function WorkoutCard({ workout, source = 'unknown' }: WorkoutCardProps) {
   const equipment = workout.equipment.length > 0 ? workout.equipment.join(', ') : 'No equipment'
 
   return (
     <Link
       to={`/workout/${workout.id}`}
+      state={{ analyticsSource: source }}
       className="group flex h-full flex-col overflow-hidden rounded-surface border border-border bg-surface shadow-surface transition-colors hover:border-border-strong focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
     >
       <div className="overflow-hidden">

@@ -57,7 +57,7 @@ export function NutritionPreviewSection() {
                   key={recipe.id}
                   variants={fadeUp}
                 >
-                  <RecipeCard recipe={recipe} />
+                  <RecipeCard recipe={recipe} source="home" />
                 </motion.div>
               ))}
         </motion.div>

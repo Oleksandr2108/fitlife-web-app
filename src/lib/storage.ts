@@ -24,3 +24,20 @@ export function removeStoredValue(key: string): boolean {
     return false;
   }
 }
+
+export function getSessionStoredValue(key: string): string | null {
+  try {
+    return window.sessionStorage.getItem(key);
+  } catch {
+    return null;
+  }
+}
+
+export function setSessionStoredValue(key: string, value: string): boolean {
+  try {
+    window.sessionStorage.setItem(key, value);
+    return true;
+  } catch {
+    return false;
+  }
+}

@@ -124,7 +124,7 @@ export function WorkoutsPage() {
                     key={workout.id}
                     variants={fadeUp}
                   >
-                    <WorkoutCard workout={workout} />
+                    <WorkoutCard workout={workout} source="library" />
                   </motion.div>
                 ))}
               </motion.div>

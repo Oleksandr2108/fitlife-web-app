@@ -57,7 +57,7 @@ export function PopularWorkoutsSection() {
                   key={workout.id}
                   variants={fadeUp}
                 >
-                  <WorkoutCard workout={workout} />
+                  <WorkoutCard workout={workout} source="home" />
                 </motion.div>
               ))}
         </motion.div>

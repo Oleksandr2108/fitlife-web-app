@@ -116,7 +116,7 @@ export function NutritionPage() {
                     variants={fadeUp}
                     className="min-w-0"
                   >
-                    <RecipeCard recipe={recipe} />
+                    <RecipeCard recipe={recipe} source="nutrition_library" />
                   </motion.div>
                 ))}
               </motion.div>
