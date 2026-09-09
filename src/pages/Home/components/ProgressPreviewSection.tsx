@@ -3,12 +3,17 @@ import { CalendarCheck2, Flame, Timer } from "lucide-react";
 import { AppContainer } from "../../../components/layout/AppContainer";
 import { Section } from "../../../components/layout/Section";
 import { useUserProgress } from "../../../hooks/queries/useUserProgress";
+import { useProgressMetrics } from "../../../hooks/useProgressMetrics";
 import { fadeUp } from "../../../lib/motion";
 import { SectionHeading } from "./SectionHeading";
 
 export function ProgressPreviewSection() {
   const { data, isPending, isError, refetch } = useUserProgress();
-  const completedThisWeek = data?.completedWorkouts.length ?? 0;
+  const {
+    weeklyCount: completedThisWeek,
+    currentStreak,
+    totalMinutes,
+  } = useProgressMetrics();
   const weeklyGoal = data?.weeklyGoal ?? 5;
   const progress = Math.min((completedThisWeek / weeklyGoal) * 100, 100);
 
@@ -80,7 +85,7 @@ export function ProgressPreviewSection() {
                     className="size-5 text-accent"
                   />
                   <p className="mt-3 text-xl font-bold">
-                    {data.currentStreak} days
+                    {currentStreak} days
                   </p>
                   <p className="text-xs text-text-muted">Current streak</p>
                 </div>
@@ -90,7 +95,7 @@ export function ProgressPreviewSection() {
                     className="size-5 text-accent"
                   />
                   <p className="mt-3 text-xl font-bold">
-                    {data.totalMinutes} min
+                    {totalMinutes} min
                   </p>
                   <p className="text-xs text-text-muted">Total movement</p>
                 </div>

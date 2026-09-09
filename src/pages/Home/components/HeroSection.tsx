@@ -1,13 +1,43 @@
 import { motion } from "framer-motion";
 import { ArrowRight, Play } from "lucide-react";
+import { Link } from "react-router-dom";
 import heroImage from "../../../assets/images/fitlife-hero.webp";
 import { AppContainer } from "../../../components/layout/AppContainer";
 import { ButtonLink } from "../../../components/ui/Button";
+import { useWorkouts } from "../../../hooks/queries/useWorkouts";
 import { usePlanDestination } from "../../../hooks/usePlanDestination";
 import { fadeUp, staggerContainer } from "../../../lib/motion";
+import { getNextPlanWorkoutDay } from "../../../lib/plan/getNextPlanWorkoutDay";
+import { useOnboardingStore } from "../../../store/onboarding.store";
+import { useProgressStore } from "../../../store/progress.store";
 
 export function HeroSection() {
   const planDestination = usePlanDestination();
+  const plan = useOnboardingStore((state) => state.generatedPlan);
+  const completedWorkouts = useProgressStore(
+    (state) => state.completedWorkouts,
+  );
+  const { data: workouts = [], isPending } = useWorkouts();
+  const nextPlanDay = getNextPlanWorkoutDay(plan, completedWorkouts);
+  const todayWorkout = nextPlanDay?.workoutId
+    ? (workouts.find((workout) => workout.id === nextPlanDay.workoutId) ?? null)
+    : null;
+  const sessionDestination = nextPlanDay?.workoutId
+    ? `/workout/${nextPlanDay.workoutId}?planDay=${nextPlanDay.day}`
+    : planDestination.to;
+  const sessionTitle = todayWorkout
+    ? todayWorkout.title
+    : nextPlanDay
+      ? "Today’s workout"
+      : "Create your 7-day plan";
+  const sessionMeta = todayWorkout
+    ? `${todayWorkout.durationMinutes} min · ${todayWorkout.difficulty[0].toUpperCase()}${todayWorkout.difficulty.slice(1)}`
+    : nextPlanDay
+      ? isPending
+        ? "Loading your session…"
+        : "Open today’s session"
+      : "Personalized workouts for your week";
+  const sessionLabel = nextPlanDay ? "Today’s plan" : "Your next step";
   return (
     <section className="overflow-hidden pb-12 pt-8 sm:pb-16 sm:pt-12 lg:pb-24 lg:pt-16">
       <AppContainer className="grid items-center gap-10 lg:grid-cols-[1.02fr_0.98fr] lg:gap-16">
@@ -71,22 +101,34 @@ export function HeroSection() {
           transition={{ duration: 0.35, delay: 0.1 }}
           className="relative mx-auto w-full max-w-xl"
         >
-          <div className="relative overflow-hidden rounded-[1.5rem] border border-border bg-surface shadow-surface">
+          <Link
+            to={sessionDestination}
+            aria-label={
+              todayWorkout
+                ? `Open today's workout: ${todayWorkout.title}`
+                : sessionTitle
+            }
+            className="group relative block overflow-hidden rounded-[1.5rem] border border-border bg-surface shadow-surface transition-colors hover:border-border-strong focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+          >
             <img
-              src={heroImage}
-              alt="Woman stretching during a home workout"
-              className="aspect-[4/5] w-full object-cover sm:aspect-[5/4] lg:aspect-[4/5]"
+              src={todayWorkout?.imageUrl ?? heroImage}
+              alt={
+                todayWorkout
+                  ? `${todayWorkout.title} workout`
+                  : "Woman stretching during a home workout"
+              }
+              className="aspect-[4/5] w-full object-cover transition-transform duration-300 group-hover:scale-[1.02] motion-reduce:transition-none sm:aspect-[5/4] lg:aspect-[4/5]"
               fetchPriority="high"
             />
             <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#0b0f14]/90 via-[#0b0f14]/25 to-transparent p-5 pt-20 text-white">
               <p className="text-meta uppercase text-emerald-300">
-                Today’s session
+                {sessionLabel}
               </p>
               <div className="mt-2 flex items-end justify-between gap-4">
                 <div>
-                  <p className="text-card-title">Full Body Reset</p>
+                  <p className="text-card-title">{sessionTitle}</p>
                   <p className="mt-1 text-sm text-slate-300">
-                    20 min · Beginner
+                    {sessionMeta}
                   </p>
                 </div>
                 <span className="grid size-11 shrink-0 place-items-center rounded-full bg-accent text-accent-foreground">
@@ -97,7 +139,7 @@ export function HeroSection() {
                 </span>
               </div>
             </div>
-          </div>
+          </Link>
         </motion.div>
       </AppContainer>
     </section>

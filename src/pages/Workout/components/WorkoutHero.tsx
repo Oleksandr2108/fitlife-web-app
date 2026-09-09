@@ -4,7 +4,13 @@ import { WorkoutImage } from "../../../components/workouts/WorkoutImage";
 import { formatWorkoutLabel } from "../../../lib/workouts/filterWorkouts";
 import type { Workout } from "../../../types";
 
-export function WorkoutHero({ workout, onStart }: { workout: Workout; onStart: () => void }) {
+export function WorkoutHero({
+  workout,
+  onStart,
+}: {
+  workout: Workout;
+  onStart: () => void;
+}) {
   const equipment =
     workout.equipment.length > 0
       ? workout.equipment.join(", ")
