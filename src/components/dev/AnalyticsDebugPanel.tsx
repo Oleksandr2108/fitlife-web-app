@@ -33,11 +33,6 @@ function TouchDetails({ label, touch }: { label: string; touch: AttributionData 
 }
 
 export function AnalyticsDebugPanel() {
-  const [enabled] = useState(
-    () =>
-      import.meta.env.DEV &&
-      new URLSearchParams(window.location.search).get("debugAnalytics") === "true",
-  );
   const [open, setOpen] = useState(false);
   const toggleRef = useRef<HTMLButtonElement>(null);
   const events = useSyncExternalStore(
@@ -58,7 +53,6 @@ export function AnalyticsDebugPanel() {
     return () => window.removeEventListener("keydown", closeOnEscape);
   }, [open]);
 
-  if (!enabled) return null;
   const attribution = getAttributionContext();
   const context = {
     anonymousId: getAnonymousId(),

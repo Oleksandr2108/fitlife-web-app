@@ -2,6 +2,7 @@ import { MotionConfig } from "framer-motion";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { AnalyticsLifecycle } from "./components/analytics/AnalyticsLifecycle";
 import { AnalyticsDebugPanel } from "./components/dev/AnalyticsDebugPanel";
+import { isAnalyticsDebugEnabled } from "./lib/analytics/analyticsDebug";
 import { AppLayout } from "./components/layout/AppLayout";
 import { FocusedLayout } from "./components/layout/FocusedLayout";
 import { WorkoutSessionLayout } from "./components/layout/WorkoutSessionLayout";
@@ -69,7 +70,7 @@ export function App() {
             />
           </Route>
         </Routes>
-        {import.meta.env.DEV ? <AnalyticsDebugPanel /> : null}
+        {isAnalyticsDebugEnabled() ? <AnalyticsDebugPanel /> : null}
       </BrowserRouter>
     </MotionConfig>
   );
