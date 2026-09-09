@@ -29,6 +29,9 @@ const WorkoutSessionPage = lazy(() =>
 const ProgressPage = lazy(() =>
   import("./pages/Progress/ProgressPage").then((module) => ({ default: module.ProgressPage })),
 );
+const PrivacyPage = lazy(() =>
+  import("./pages/Privacy/PrivacyPage").then((module) => ({ default: module.PrivacyPage })),
+);
 const NutritionPage = lazy(() =>
   import("./pages/Nutrition/NutritionPage").then((module) => ({ default: module.NutritionPage })),
 );
@@ -59,6 +62,7 @@ export function App() {
               <Route path="/nutrition/:id" element={<RecipePage />} />
               <Route path="/plan" element={<PlanPage />} />
               <Route path="/progress" element={<ProgressPage />} />
+              <Route path="/privacy" element={<PrivacyPage />} />
               <Route path="*" element={<NotFoundPage />} />
             </Route>
             <Route element={<FocusedLayout />}>
