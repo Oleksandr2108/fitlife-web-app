@@ -29,27 +29,21 @@ FitLife is a consumer-style fitness MVP created as an AI Product Builder test as
 
 ## Promo Video
 
-<p align="center">
-  <a href="./docs/promo/fitlife-promo.mp4">
-    <img src="./docs/promo/fitlife-promo-cover.png" width="960" alt="Play the FitLife product promo video" />
-  </a>
-</p>
-
-The [35-second product tour](./docs/promo/fitlife-promo.mp4) uses real FitLife screens to present onboarding, the workout plan, guided training, progress, nutrition, and analytics.
+![Application demo](./docs/promo/fitlife-promo.gif)
 
 ## Test Assignment Coverage
 
-| Requirement | Status | Implementation |
-| --- | --- | --- |
-| AI-assisted site development | ✅ | Structured phase prompts and reviewed Codex workflow |
-| White/non-gambling product | ✅ | Fitness and nutrition product without betting mechanics |
-| WebView-ready web basis | ✅ | Mobile-first layouts, safe areas, touch UX, SPA routing, and defensive storage |
-| UAC understanding | ✅ | UTM capture, first/current touch, typed events, and documented install-attribution boundary |
-| Functional product | ✅ | Plans, workouts, guided sessions, progress, and nutrition |
-| Google Play/WebView criteria documented | ✅ | [Readiness assessment](./docs/google-play-readiness.md) |
-| Privacy transparency | ✅ | Public [Privacy Policy](https://fitlife-web-app.vercel.app/privacy) |
-| Data Safety mapping | ✅ | [Draft data mapping](./docs/google-play-data-safety.md) |
-| Native Android wrapper | Not part of current scope | Future production step; no Android project is included |
+| Requirement                             | Status                    | Implementation                                                                              |
+| --------------------------------------- | ------------------------- | ------------------------------------------------------------------------------------------- |
+| AI-assisted site development            | ✅                        | Structured phase prompts and reviewed Codex workflow                                        |
+| White/non-gambling product              | ✅                        | Fitness and nutrition product without betting mechanics                                     |
+| WebView-ready web basis                 | ✅                        | Mobile-first layouts, safe areas, touch UX, SPA routing, and defensive storage              |
+| UAC understanding                       | ✅                        | UTM capture, first/current touch, typed events, and documented install-attribution boundary |
+| Functional product                      | ✅                        | Plans, workouts, guided sessions, progress, and nutrition                                   |
+| Google Play/WebView criteria documented | ✅                        | [Readiness assessment](./docs/google-play-readiness.md)                                     |
+| Privacy transparency                    | ✅                        | Public [Privacy Policy](https://fitlife-web-app.vercel.app/privacy)                         |
+| Data Safety mapping                     | ✅                        | [Draft data mapping](./docs/google-play-data-safety.md)                                     |
+| Native Android wrapper                  | Not part of current scope | Future production step; no Android project is included                                      |
 
 ## Product Experience
 
@@ -64,12 +58,12 @@ Home → Onboarding → Personalized 7-Day Plan → Workout Details
 - **Guided session:** timed and repetition exercises, rest, pause/resume, audio feedback, and recovery after navigation.
 - **Progress:** persisted history drives totals, streaks, weekly comparisons, recent activity, and a custom SVG chart.
 
-| Home | Onboarding | Personalized plan |
-| --- | --- | --- |
+| Home                                                       | Onboarding                                                              | Personalized plan                                            |
+| ---------------------------------------------------------- | ----------------------------------------------------------------------- | ------------------------------------------------------------ |
 | ![FitLife Home in dark theme](./docs/screenshots/home.png) | ![FitLife onboarding goal selection](./docs/screenshots/onboarding.png) | ![Generated FitLife 7-day plan](./docs/screenshots/plan.png) |
 
-| Workout library | Guided workout session | Progress dashboard |
-| --- | --- | --- |
+| Workout library                                                         | Guided workout session                                                         | Progress dashboard                                                             |
+| ----------------------------------------------------------------------- | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ |
 | ![FitLife workout filters and library](./docs/screenshots/workouts.png) | ![FitLife active guided workout timer](./docs/screenshots/workout-session.png) | ![FitLife progress totals and activity chart](./docs/screenshots/progress.png) |
 
 These are real 390 × 844 captures from the production preview. The [screenshot gallery](./docs/screenshots/README.md) records the route and state used for each image; no imagined application screens are included.
@@ -78,8 +72,8 @@ These are real 390 × 844 captures from the production preview. The [screenshot 
 
 The secondary lifestyle flow includes a searchable, filterable Nutrition Library and typed Recipe Details with ingredients, preparation steps, nutrition facts, and a custom macro visualization. Content is presented as practical meal inspiration, not medical advice.
 
-| Nutrition library | Recipe details and macros |
-| --- | --- |
+| Nutrition library                                                         | Recipe details and macros                                                              |
+| ------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- |
 | ![FitLife nutrition search and filters](./docs/screenshots/nutrition.png) | ![FitLife recipe nutrition facts and macro composition](./docs/screenshots/recipe.png) |
 
 ## UAC Attribution & Analytics
@@ -166,10 +160,10 @@ Server-like catalogs and entities belong to TanStack Query; local onboarding, pl
 
 Phase 10 introduced route-level `React.lazy()`, `Suspense`, a shared route fallback, and a separately lazy-loaded analytics debug panel. Below-the-fold catalog images remain lazy-loaded.
 
-| Production entry JS | Before | After |
-| --- | ---: | ---: |
-| Minified | 534.64 kB | 392.93 kB |
-| Gzip | 160.61 kB | 125.88 kB |
+| Production entry JS |    Before |     After |
+| ------------------- | --------: | --------: |
+| Minified            | 534.64 kB | 392.93 kB |
+| Gzip                | 160.61 kB | 125.88 kB |
 
 These values come from the recorded Vite production builds. No Lighthouse score is claimed.
 
@@ -191,34 +185,34 @@ FitLife followed a structured AI-assisted development workflow rather than an un
 
 The [phase prompt archive](./docs/prompts/README.md) preserves the exact core prompts available from the project conversation, including the pre-Phase-9 audit and Phase 8.5 stabilization work.
 
-| Phase | Scope |
-| --- | --- |
-| [1](./docs/prompts/phase-01-foundation.md) | Foundation and typed service architecture |
-| [2](./docs/prompts/phase-02-design-system.md) | Design system and application shell |
-| [3](./docs/prompts/phase-03-home-theme.md) | Theme system and Home experience |
-| [4](./docs/prompts/phase-04-onboarding-plan.md) | Onboarding and deterministic plan |
-| [5](./docs/prompts/phase-05-workouts.md) | Workout library and details |
-| [6](./docs/prompts/phase-06-workout-session.md) | Guided workout session |
-| [7](./docs/prompts/phase-07-progress-dashboard.md) | Derived progress dashboard |
-| [8](./docs/prompts/phase-08-nutrition.md) | Nutrition and recipe details |
-| [8.5](./docs/prompts/phase-08-5-stabilization.md) | Audit and targeted stabilization |
-| [9](./docs/prompts/phase-09-uac-analytics.md) | UAC attribution and analytics |
-| [10](./docs/prompts/phase-10-production-polish.md) | Production polish |
-| [10.5](./docs/prompts/phase-10-5-project-showcase.md) | Branding and project showcase |
+| Phase                                                 | Scope                                     |
+| ----------------------------------------------------- | ----------------------------------------- |
+| [1](./docs/prompts/phase-01-foundation.md)            | Foundation and typed service architecture |
+| [2](./docs/prompts/phase-02-design-system.md)         | Design system and application shell       |
+| [3](./docs/prompts/phase-03-home-theme.md)            | Theme system and Home experience          |
+| [4](./docs/prompts/phase-04-onboarding-plan.md)       | Onboarding and deterministic plan         |
+| [5](./docs/prompts/phase-05-workouts.md)              | Workout library and details               |
+| [6](./docs/prompts/phase-06-workout-session.md)       | Guided workout session                    |
+| [7](./docs/prompts/phase-07-progress-dashboard.md)    | Derived progress dashboard                |
+| [8](./docs/prompts/phase-08-nutrition.md)             | Nutrition and recipe details              |
+| [8.5](./docs/prompts/phase-08-5-stabilization.md)     | Audit and targeted stabilization          |
+| [9](./docs/prompts/phase-09-uac-analytics.md)         | UAC attribution and analytics             |
+| [10](./docs/prompts/phase-10-production-polish.md)    | Production polish                         |
+| [10.5](./docs/prompts/phase-10-5-project-showcase.md) | Branding and project showcase             |
 
 ## Tech Stack
 
-| Technology | Responsibility |
-| --- | --- |
-| React + TypeScript | Strictly typed component application |
-| Vite | Development and production builds |
-| Tailwind CSS | Semantic tokens and responsive styling |
-| React Router | SPA routing and route-level code splitting |
-| TanStack Query | Asynchronous server-like state |
-| Zustand | Persisted client and workout-session state |
-| Framer Motion | Purposeful, reduced-motion-aware transitions |
-| Lucide React | Consistent application icons |
-| Vitest | High-value domain and persistence tests |
+| Technology         | Responsibility                               |
+| ------------------ | -------------------------------------------- |
+| React + TypeScript | Strictly typed component application         |
+| Vite               | Development and production builds            |
+| Tailwind CSS       | Semantic tokens and responsive styling       |
+| React Router       | SPA routing and route-level code splitting   |
+| TanStack Query     | Asynchronous server-like state               |
+| Zustand            | Persisted client and workout-session state   |
+| Framer Motion      | Purposeful, reduced-motion-aware transitions |
+| Lucide React       | Consistent application icons                 |
+| Vitest             | High-value domain and persistence tests      |
 
 ## Google Play / WebView Readiness
 
@@ -234,8 +228,8 @@ The implemented web characteristics and the future native responsibilities are s
 - Initial UTM capture from the WebView entry URL
 - Dark theme by default, manual light-theme toggle, and both themes QA-tested
 
-| Default dark theme | Persisted light theme |
-| --- | --- |
+| Default dark theme                                                     | Persisted light theme                                                           |
+| ---------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
 | ![FitLife Home in the default dark theme](./docs/screenshots/home.png) | ![FitLife Home in the persisted light theme](./docs/screenshots/home-light.png) |
 
 > FitLife is WebView-ready web architecture; it does not include or claim a native bridge or released mobile application.
