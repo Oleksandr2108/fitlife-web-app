@@ -104,7 +104,7 @@ export function RecipePage() {
               decoding="async"
               className="aspect-[16/11] h-full max-h-[30rem] w-full object-cover"
             />
-            <div className="min-w-0 p-5 sm:p-8 lg:self-center">
+            <div className="relative z-[1] min-w-0 bg-surface p-5 sm:p-8 lg:self-center">
               <p className="text-meta capitalize text-accent">
                 {recipe.mealType}
               </p>
